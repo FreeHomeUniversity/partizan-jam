@@ -1123,11 +1123,6 @@
     "@emotion/weak-memoize" "0.2.5"
     stylis "^4.0.1"
 
-"@emotion/core@^11.0.0-next.10":
-  version "11.0.0-next.10"
-  resolved "https://registry.yarnpkg.com/@emotion/core/-/core-11.0.0-next.10.tgz#a020be64ccd72cab5906054411b21c464702d3a5"
-  integrity sha512-BlOsLD9qPUNgYI81maQC0jUuc7i5Ql1K/LtGX9HDX1krLKjkKayh3Q9ASMEbpVM88jvAphyvKlKETfF5Go8NWQ==
-
 "@emotion/css@^11.0.0-next.12":
   version "11.0.0-next.13"
   resolved "https://registry.yarnpkg.com/@emotion/css/-/css-11.0.0-next.13.tgz#18a926dd0b0e985e0ea14cbc3dc0311b43f11b4a"
@@ -1326,6 +1321,11 @@
   version "4.0.0"
   resolved "https://registry.yarnpkg.com/@types/parse-json/-/parse-json-4.0.0.tgz#2f8bb441434d163b35fb8ffdccd7138927ffb8c0"
   integrity sha512-//oorEZjL6sbPcKUaCdIGlIUeH26mgzimjBB77G6XRgnDl/L5wOnpyBGRe/Mmf5CVW3PwEBE1NjiMZ/ssFh4wA==
+
+"@types/prismic-dom@^2.1.1":
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/@types/prismic-dom/-/prismic-dom-2.1.1.tgz#964f4699a3068721627674d12a0689e457e9065c"
+  integrity sha512-gZSFBARo4vFnpclOq2DzU9t4wikVsZ0+lL4hXaRoeUJinhGSK+nMERcZJgXglK/+QRcw3HBPbGJzgzTqQGSuNw==
 
 "@types/prop-types@*":
   version "15.7.3"
@@ -2421,7 +2421,7 @@ create-hmac@^1.1.0, create-hmac@^1.1.4, create-hmac@^1.1.7:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-cross-fetch@3.0.5:
+cross-fetch@3.0.5, cross-fetch@^3.0.4:
   version "3.0.5"
   resolved "https://registry.yarnpkg.com/cross-fetch/-/cross-fetch-3.0.5.tgz#2739d2981892e7ab488a7ad03b92df2816e03f4c"
   integrity sha512-FFLcLtraisj5eteosnX1gf01qYDCOc4fDy0+euOt8Kn9YBY2NtXL/pCoYPavw24NIQkQqm5ZOLsGD5Zzj0gyew==
@@ -2939,6 +2939,11 @@ escalade@^3.0.1:
   version "3.0.1"
   resolved "https://registry.yarnpkg.com/escalade/-/escalade-3.0.1.tgz#52568a77443f6927cd0ab9c73129137533c965ed"
   integrity sha512-DR6NO3h9niOT+MZs7bjxlj2a1k+POu5RN8CLTPX2+i78bRi9eLe7+0zXgUHMnGXWybYcL61E9hGhPKqedy8tQA==
+
+escape-html@1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/escape-html/-/escape-html-1.0.3.tgz#0258eae4d3d0c0974de1c169188ef0051d1d1988"
+  integrity sha1-Aljq5NPQwJdN4cFpGI7wBR0dGYg=
 
 escape-string-regexp@^1.0.2, escape-string-regexp@^1.0.5:
   version "1.0.5"
@@ -5336,6 +5341,35 @@ pretty-hrtime@^1.0.3:
   resolved "https://registry.yarnpkg.com/pretty-hrtime/-/pretty-hrtime-1.0.3.tgz#b7e3ea42435a4c9b2759d99e0f201eb195802ee1"
   integrity sha1-t+PqQkNaTJsnWdmeDyAesZWALuE=
 
+prismic-dom@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/prismic-dom/-/prismic-dom-2.2.3.tgz#803925eebe58a4dd147529f50b71c0853eb3d744"
+  integrity sha512-7jwRBbqkll9BPkS4QAQttRaENmAWR9s4PWGGmi7ifobs1J0kYDCrn8PxJ99cywQJQea0jWgAVzOfJhkMmIF8wQ==
+  dependencies:
+    escape-html "1.0.3"
+    prismic-helpers "^1.0.3"
+    prismic-richtext "^1.0.3"
+
+prismic-helpers@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/prismic-helpers/-/prismic-helpers-1.0.3.tgz#cc1aa184f8791ed6b0a1775a9eb68a74a83f741e"
+  integrity sha512-eGCSflFwsWeXe7BdqWWGjjoaq1SPr61Y55xIUkgYumKFmfJsK9TVcSkRp0rdwW0hGnnDSRvjJwIo2kkDwG7KxA==
+
+prismic-javascript@^3.0.1:
+  version "3.0.1"
+  resolved "https://registry.yarnpkg.com/prismic-javascript/-/prismic-javascript-3.0.1.tgz#5700bf61aa1fc20b1dac931f7f8a6c024588d1d7"
+  integrity sha512-LAXO5h24Txp4BozGYhTRsxxhXP45VvsUZp6Xb0ENaA7aatVjxTNFmn/yEx3d8nNqiyqKjRsAYcGW6vvL3GqC+A==
+  dependencies:
+    cross-fetch "^3.0.4"
+
+prismic-richtext@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/prismic-richtext/-/prismic-richtext-1.0.3.tgz#ce8c8c18d65b01f1036f222b993ad2de700199fe"
+  integrity sha512-ZM45dVPL713+oDpt8ysWRY2pw3esBxRrqBlUO+q/T0WK0SNVSq29tQYhVdIALd8hRfF7X1lfpW0Q0YymEdh0AA==
+  dependencies:
+    ramda "^0.26.1"
+    uuid "^3.3.2"
+
 process-nextick-args@~2.0.0:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/process-nextick-args/-/process-nextick-args-2.0.1.tgz#7820d9b16120cc55ca9ae7792680ae7dba6d7fe2"
@@ -5448,6 +5482,11 @@ querystring@0.2.0, querystring@^0.2.0:
   version "0.2.0"
   resolved "https://registry.yarnpkg.com/querystring/-/querystring-0.2.0.tgz#b209849203bb25df820da756e747005878521620"
   integrity sha1-sgmEkgO7Jd+CDadW50cAWHhSFiA=
+
+ramda@^0.26.1:
+  version "0.26.1"
+  resolved "https://registry.yarnpkg.com/ramda/-/ramda-0.26.1.tgz#8d41351eb8111c55353617fc3bbffad8e4d35d06"
+  integrity sha512-hLWjpy7EnsDBb0p+Z3B7rPi3GDeRG5ZtiI33kJhTt+ORCd38AbAIjB/9zRIUoeTbE/AVX5ZkU7m6bznsvrf8eQ==
 
 randombytes@^2.0.0, randombytes@^2.0.1, randombytes@^2.0.5, randombytes@^2.1.0:
   version "2.1.0"
@@ -6493,6 +6532,11 @@ util@^0.11.0:
   integrity sha512-HShAsny+zS2TZfaXxD9tYj4HQGlBezXZMZuM/S5PKLLoZkShZiGk9o5CzukI1LVHZvjdvZ2Sj1aW/Ndn2NB/HQ==
   dependencies:
     inherits "2.0.3"
+
+uuid@^3.3.2:
+  version "3.4.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
+  integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==
 
 vendors@^1.0.0:
   version "1.0.4"

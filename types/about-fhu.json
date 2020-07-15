@@ -1,0 +1,111 @@
+{
+  "Main": {
+    "title": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1",
+        "label": "Title",
+        "placeholder": "Tile"
+      }
+    },
+    "image": {
+      "type": "Image",
+      "config": {
+        "constraint": {
+          "width": null,
+          "height": null
+        },
+        "thumbnails": [
+          {
+            "name": "fb",
+            "width": 1200,
+            "height": 628
+          },
+          {
+            "name": "full",
+            "width": 1920,
+            "height": 1080
+          }
+        ],
+        "label": "Image"
+      }
+    },
+    "description": {
+      "type": "StructuredText",
+      "config": {
+        "single": "paragraph, strong, em",
+        "label": "Description",
+        "placeholder": "Description"
+      }
+    },
+    "body": {
+      "type": "Slices",
+      "fieldset": "Slice zone",
+      "config": {
+        "choices": {
+          "text": {
+            "type": "Slice",
+            "fieldset": "Text",
+            "description": "Rich Text Section",
+            "icon": "text_fields",
+            "non-repeat": {
+              "text": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "text",
+                  "placeholder": "Your content here"
+                }
+              }
+            },
+            "repeat": {}
+          },
+          "image": {
+            "type": "Slice",
+            "fieldset": "Image",
+            "description": "Image or slider",
+            "icon": "local_see",
+            "display": "list",
+            "non-repeat": {},
+            "repeat": {
+              "imagesrc": {
+                "type": "Image",
+                "config": {
+                  "constraint": {},
+                  "thumbnails": [],
+                  "label": "ImageSrc"
+                }
+              },
+              "caption": {
+                "type": "StructuredText",
+                "config": {
+                  "multi": "paragraph, preformatted, heading3, heading4, heading5, heading6, strong, em, hyperlink, list-item, o-list-item",
+                  "allowTargetBlank": true,
+                  "label": "Caption",
+                  "placeholder": "Place image caption here"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "SEO": {
+    "seodescrition": {
+      "type": "Text",
+      "config": {
+        "label": "SEODescrition",
+        "placeholder": "SEO Description"
+      }
+    },
+    "seokeywords": {
+      "type": "Text",
+      "config": {
+        "label": "SEOKeywords",
+        "placeholder": "SEO Keywords"
+      }
+    }
+  }
+}

@@ -1,6 +1,20 @@
 @tailwind base;
 @tailwind components;
 
-/* Some global styles */
+:root {
+  --color: rgba(0, 0, 0, 1);
+  --backgound-color: rgba(255, 255, 255, 1);
+  --outline-color: rgba(151, 151, 151, 1);
+}
+
+.box {
+  background-color: var(--backgound-color);
+  color: var(--color);
+}
+
+.box-outline {
+    outline: 2px solid var(--outline-color);
+    outline-offset: -1px;
+}
 
 @tailwind utilities;
