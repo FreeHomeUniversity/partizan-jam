@@ -3,6 +3,7 @@ import * as React from 'react'
 export type BoxProps = {
   p?: number
   className?: React.HTMLAttributes<any>['className']
+  children: React.ReactNode
 }
 export const Box: React.FC<BoxProps> = ({
   children,
@@ -10,7 +11,7 @@ export const Box: React.FC<BoxProps> = ({
   p = 4,
 }) => {
   return (
-    <div className={`grid content-center p-${p} box box-outline ${className}`}>
+    <div className={`grid place-center p-${p} theme theme-outline ${className}`}>
       {children}
     </div>
   )

@@ -1,15 +1,15 @@
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 
-import { getAboutFHU } from '../lib/api'
+import { getAboutKots } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
 import { Box } from '../components/Box'
 
-export default function About({ aboutFHU, title, body }) {
-  const { image } = aboutFHU.data
+export default function About({ aboutKots, title, body }) {
+  const { image } = aboutKots.data
 
   return (
-    <div className="p-4">
+    <>
       <Head>
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
@@ -35,7 +35,7 @@ export default function About({ aboutFHU, title, body }) {
                   <>
                     {items.map(({ imagesrc, caption }) => (
                       <Box key={imagesrc.url}>
-                        <img src={imagesrc.url} alt={caption[0] || ''} />
+                        <img src={imagesrc.url} alt={caption?.[0]?.text || ''} />
                       </Box>
                     ))}
                   </>
@@ -46,17 +46,17 @@ export default function About({ aboutFHU, title, body }) {
           }
         })}
       </div>
-    </div>
+    </>
   )
 }
 
 export async function getStaticProps() {
-  const aboutFHU = await getAboutFHU()
+  const aboutKots = await getAboutKots()
 
-  const title = RichText.asText(aboutFHU.data.title)
+  const title = RichText.asText(aboutKots.data.title)
   const body = []
 
-  aboutFHU.data.body.forEach(({ slice_type, items, primary }) => {
+  aboutKots.data.body.forEach(({ slice_type, items, primary }) => {
     switch (slice_type) {
       case 'text':
         body.push({
@@ -73,6 +73,6 @@ export async function getStaticProps() {
   })
 
   return {
-    props: { aboutFHU, title, body },
+    props: { aboutKots, title, body },
   }
 }

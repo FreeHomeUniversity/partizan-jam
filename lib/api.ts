@@ -42,12 +42,26 @@ async function fetchAPI(query, { previewData, variables }: any = {}) {
 
 export async function getHomepage(previewData) {
   const data = await fetchAPI(
-    `
+    /* graphiql */ `
     query {
       allHomepages {
         edges {
           node {
             title
+            description
+            image
+          }
+        }
+      }
+      allSongs {
+        edges {
+          node {
+            title
+            description
+            video
+            _meta {
+              uid
+            }
           }
         }
       }
@@ -56,7 +70,7 @@ export async function getHomepage(previewData) {
     { previewData }
   )
 
-  return data.allHomepages.edges[0].node
+  return [data.allHomepages.edges[0].node, data.allSongs]
 }
 
 export const FHUClient = Prismic.client(FHU_API_URL, {
@@ -67,6 +81,24 @@ export async function getAboutFHU() {
   const api = await FHUClient.getApi()
   const { results } = await api.query(
     Prismic.Predicates.at('document.type', 'about')
+  )
+
+  return results[0]
+}
+
+export async function getAboutTEPJ() {
+  const api = await FHUClient.getApi()
+  const { results } = await api.query(
+    Prismic.Predicates.at('my.text.uid', 'transeuropean-parizan-jam')
+  )
+
+  return results[0]
+}
+
+export async function getAboutKots() {
+  const api = await FHUClient.getApi()
+  const { results } = await api.query(
+    Prismic.Predicates.at('my.text.uid', 'arkadiy-kots-band')
   )
 
   return results[0]

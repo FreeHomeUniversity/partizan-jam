@@ -7,14 +7,30 @@
   --outline-color: rgba(151, 151, 151, 1);
 }
 
-.box {
+html {
+  overflow: hidden;
+  overflow-y: auto;
+}
+
+html,
+body,
+.theme {
+  @apply transition-colors duration-700 ease-in-out;
   background-color: var(--backgound-color);
   color: var(--color);
 }
 
-.box-outline {
-    outline: 2px solid var(--outline-color);
-    outline-offset: -1px;
+.theme-outline {
+  outline: 2px solid var(--outline-color);
+  outline-offset: -1px;
+}
+
+.place-center {
+  place-content: center;
+}
+
+.place-start {
+  place-content: start;
 }
 
 @tailwind utilities;
