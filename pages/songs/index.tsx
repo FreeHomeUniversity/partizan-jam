@@ -3,11 +3,11 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { RichText } from 'prismic-dom'
 
-import { Box } from '../components/Box'
-import { getHomepage, getAllSongs } from '../lib/api'
-import { linkResolver, htmlSerializer } from '../lib/prismic'
+import { Box } from '../../components/Box'
+import { getAllSongs } from '../../lib/api'
+import { linkResolver, htmlSerializer } from '../../lib/prismic'
 
-export default function Home({ title, songs }) {
+export default function SongsPage({ title, songs }) {
   return (
     <>
       <Head>
@@ -38,10 +38,9 @@ export default function Home({ title, songs }) {
 }
 
 export async function getStaticProps({ preview = false, previewData }) {
-  const homepage = await getHomepage(previewData)
   const prismicSongs = await getAllSongs(previewData)
 
-  const title = RichText.asText(homepage.title)
+  const title = 'Songs'
 
   const songs = []
 

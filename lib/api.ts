@@ -42,8 +42,8 @@ async function fetchAPI(query, { previewData, variables }: any = {}) {
 
 export async function getHomepage(previewData) {
   const data = await fetchAPI(
-    /* graphiql */ `
-    query {
+  `
+    query HomepageQuery {
       allHomepages {
         edges {
           node {
@@ -53,6 +53,18 @@ export async function getHomepage(previewData) {
           }
         }
       }
+    }
+  `,
+    { previewData }
+  )
+
+  return data.allHomepages.edges[0].node
+}
+
+export async function getAllSongs(previewData) {
+  const data = await fetchAPI(
+  `
+    query AllSongsQuery {
       allSongs {
         edges {
           node {
@@ -60,7 +72,9 @@ export async function getHomepage(previewData) {
             description
             video
             _meta {
+              id
               uid
+              tags
             }
           }
         }
@@ -70,7 +84,82 @@ export async function getHomepage(previewData) {
     { previewData }
   )
 
-  return [data.allHomepages.edges[0].node, data.allSongs]
+  return data.allSongs?.edges || [];
+}
+
+export async function getSong(uid, previewData) {
+  const data = await fetchAPI(
+  `
+    query SongQuery($uid: String!) {
+      allSongs(uid: $uid) {
+        edges {
+          node {
+            title
+            description
+            video
+            story {
+              ... on Story {
+                title
+                description
+                stories {
+                  language
+                  text
+                }
+                _meta {
+                  id
+                  uid
+                }
+              }
+            }
+            musicians {
+              ... on SongMusicians {
+                musician {
+                  ... on Musician {
+                    title
+                    description
+                    image
+                    _meta {
+                      id
+                      uid
+                    }
+                  }
+                }
+              }
+            }
+            artist {
+              ... on Artist {
+                title
+                description
+                image
+                body {
+                  ... on ArtistBodyArtwork {
+                    primary {
+                      artwork_title
+                      artwork_description
+                      artwork_image
+                    }
+                  }
+                }
+                _meta {
+                  id
+                  uid
+                }
+              }
+            }
+            _meta {
+              id
+              uid
+              tags
+            }
+          }
+        }
+      }
+    }
+  `,
+    { previewData, variables: { uid } }
+  )
+
+  return data.allSongs.edges?.[0]?.node;
 }
 
 export const FHUClient = Prismic.client(FHU_API_URL, {
