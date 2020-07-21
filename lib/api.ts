@@ -15,6 +15,7 @@ export const PrismicClient = Prismic.client(REF_API_URL, {
 
 async function fetchAPI(query, { previewData, variables }: any = {}) {
   const prismicAPI = await PrismicClient.getApi()
+
   const res = await fetch(
     `${GRAPHQL_API_URL}?query=${query}&variables=${JSON.stringify(variables)}`,
     {

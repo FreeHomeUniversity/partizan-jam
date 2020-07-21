@@ -4,6 +4,8 @@ import { RichText } from 'prismic-dom'
 import { getAboutTEPJ } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
 import { Box } from '../components/Box'
+import { Image } from '../components/Image'
+import { YouTube } from '../components/YouTube'
 
 export default function About({ aboutTEPJ, title, body }) {
   const { image } = aboutTEPJ.data
@@ -25,43 +27,38 @@ export default function About({ aboutTEPJ, title, body }) {
           switch (slice_type) {
             case 'text':
               return (
-                <Box key={html} className="col-span-3">
+                <Box key={html} className="grid grid-cols-3 col-span-3">
                   <div
                     dangerouslySetInnerHTML={{ __html: html }}
-                    className="max-w-3xl text-md"
+                    className="col-start-2 space-y-4 text-lg leading-8"
                   />
                 </Box>
               )
             case 'Lead':
               return (
-                <Box key={html} className="col-span-3">
+                <Box key={html} className="grid grid-cols-3 col-span-3">
                   <div
                     dangerouslySetInnerHTML={{ __html: html }}
-                    className="w-full max-w-3xl text-xl"
+                    className="col-start-2 space-y-4 text-xl leading-8"
                   />
                 </Box>
               )
             case 'video':
               return (
                 <Box key={html}>
-                  <div
-                    className="grid w-full place-center"
-                    dangerouslySetInnerHTML={{ __html: html }}
-                  />
+                  <YouTube youTubeId={html} />
                 </Box>
               )
             case 'image':
               return (
-                <Box key={items} className="col-span-3" p={0}>
+                <Box key={items} className="grid grid-cols-3 col-span-3" p={0}>
                   <>
                     {items.map(({ imagesrc, caption }) => (
-                      <Box key={imagesrc.url}>
-                        <picture>
-                          <img
-                            src={imagesrc.url}
-                            alt={caption?.[0]?.text || ''}
-                          />
-                        </picture>
+                      <Box key={imagesrc.url} className="col-start-2">
+                        <Image
+                          src={imagesrc.url}
+                          alt={caption?.[0]?.text || ''}
+                        />
                       </Box>
                     ))}
                   </>
@@ -99,7 +96,9 @@ export async function getStaticProps() {
       case 'video':
         body.push({
           slice_type,
-          html: primary.link.html,
+          html: primary.link.embed_url
+            .replace('https://www.youtube.com/watch?v=', '')
+            .replace(/&.+/, ''),
         })
         break
       case 'image':

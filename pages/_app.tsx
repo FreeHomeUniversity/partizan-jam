@@ -8,6 +8,7 @@ import Box from '../components/Box'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
 
+import '../styles/fonts.css'
 import '../styles/base.css'
 
 const [useTheme] = create((set) => ({

@@ -10,6 +10,7 @@
 html {
   overflow: hidden;
   overflow-y: auto;
+  font-family: 'Jost*', sans-serif;
 }
 
 html,
@@ -20,21 +21,29 @@ body,
   color: var(--color);
 }
 
+h1,
+h2,
+h3 {
+  font-family: 'MFred', sans-serif;
+  line-height: 0.75;
+  transform: translateY(25%);
+}
+
 .theme-outline {
   outline: 2px solid var(--outline-color);
   outline-offset: -1px;
 }
 
-.place-center {
-  place-content: center;
+.place-stretch {
+  place-content: stretch;
 }
 
 .place-start {
   place-content: start;
 }
 
-.place-stretch {
-  place-content: stretch;
+.place-center {
+  place-content: center;
 }
 
 @tailwind utilities;

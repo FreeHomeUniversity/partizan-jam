@@ -12,7 +12,7 @@ export const Box: React.FC<BoxProps> = ({
 }) => {
   return (
     <div
-      className={`grid place-center p-${p} theme theme-outline ${className}`}
+      className={`grid place-stretch p-${p} theme theme-outline ${className}`}
     >
       {children}
     </div>

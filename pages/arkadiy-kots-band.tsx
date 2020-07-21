@@ -4,6 +4,7 @@ import { RichText } from 'prismic-dom'
 import { getAboutKots } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
 import { Box } from '../components/Box'
+import { Image } from '../components/Image'
 
 export default function About({ aboutKots, title, body }) {
   const { image } = aboutKots.data
@@ -18,7 +19,7 @@ export default function About({ aboutKots, title, body }) {
         <h1 className="text-4xl font-bold">{title}</h1>
       </Box>
       <Box>
-        <img src={image.url} alt={image.alt || ''} />
+        <Image src={image.url} alt={image.alt} aspectRatio="16:9" />
       </Box>
       <div>
         {body.map(({ slice_type, items, html }) => {

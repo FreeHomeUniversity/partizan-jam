@@ -5,6 +5,7 @@ import { RichText } from 'prismic-dom'
 import { truncate } from 'lodash'
 
 import { Box } from '../components/Box'
+import { Card } from '../components/Card'
 import {
   getHomepage,
   getAllSongs,
@@ -26,45 +27,35 @@ export default function Home({ title, songs, kots, fhu, tepj }) {
           <h1 className="text-5xl font-bold">{title}</h1>
         </Box>
         <Box p={0} className="grid-cols-3">
-          <Box>
-            <Link href={'/free-home-university'} passHref>
-              <a>
-                <h3 className="text-xl font-bold">{fhu.title}</h3>
-                <div dangerouslySetInnerHTML={{ __html: fhu.description }} />
-              </a>
-            </Link>
-          </Box>
-          <Box>
-            <Link href={'/arkadiy-kots-band'} passHref>
-              <a>
-                <h3 className="text-xl font-bold">{kots.title}</h3>
-                <div dangerouslySetInnerHTML={{ __html: kots.description }} />
-              </a>
-            </Link>
-          </Box>
-          <Box>
-            <Link href={'/transeuropean-partizan-jam'} passHref>
-              <a>
-                <h3 className="text-xl font-bold">{tepj.title}</h3>
-                <div dangerouslySetInnerHTML={{ __html: tepj.description }} />
-              </a>
-            </Link>
-          </Box>
+          <Card
+            href={'/free-home-university'}
+            title={fhu.title}
+            subtitle={fhu.description}
+          />
+          <Card
+            href={'/arkadiy-kots-band'}
+            title={kots.title}
+            subtitle={kots.description}
+          />
+          <Card
+            href={'/transeuropean-partizan-jam'}
+            title={tepj.title}
+            subtitle={tepj.description}
+          />
         </Box>
         <Box>
           <h2 className="text-3xl font-black">Songs</h2>
         </Box>
         <Box p={0} className="grid-cols-3">
           {songs.map((song) => (
-            <Box key={song.id}>
-              <Link href={`/songs/${song.uid}`} passHref>
-                <a>
-                  <img src={song.thumbnail.url} alt={song.thumbnail.alt} />
-                  <h3>{song.title}</h3>
-                  <div dangerouslySetInnerHTML={{ __html: song.description }} />
-                </a>
-              </Link>
-            </Box>
+            <Card
+              key={song.id}
+              image={song.thumbnail.url}
+              alt={song.thumbnail.alt}
+              href={`/songs/${song.uid}`}
+              title={song.title}
+              subtitle={song.description}
+            />
           ))}
         </Box>
         <Box>
@@ -72,14 +63,12 @@ export default function Home({ title, songs, kots, fhu, tepj }) {
         </Box>
         <Box p={0} className="grid-cols-2">
           {songs.map((song) => (
-            <Box key={song.id}>
-              <Link href={`/stories/${song.uid}`} passHref>
-                <a>
-                  <h3>{song.title}</h3>
-                  <div dangerouslySetInnerHTML={{ __html: song.description }} />
-                </a>
-              </Link>
-            </Box>
+            <Card
+              key={song.id}
+              href={`/stories/${song.uid}`}
+              title={song.title}
+              subtitle={song.description}
+            />
           ))}
         </Box>
       </Box>
@@ -141,7 +130,7 @@ export async function getStaticProps({ preview = false, previewData }) {
       ),
       thumbnail: {
         url: node.video.thumbnail_url,
-        alt: node.video.title || '',
+        alt: node.video.title || title,
       },
     })
   })
