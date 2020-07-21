@@ -40,7 +40,7 @@ export default function MyApp({ Component, pageProps }) {
       `}
     >
       <Head>
-        <title>Tailwindcss Emotion Example</title>
+        <title>TransEuropean Partizan Jam</title>
       </Head>
       <div
         className="grid"
@@ -57,7 +57,7 @@ export default function MyApp({ Component, pageProps }) {
             </Link>
           </Box>
         </Box>
-        <Box p={0}>
+        <Box p={0} className="place-stretch">
           <Component {...pageProps} />
           <Footer />
         </Box>

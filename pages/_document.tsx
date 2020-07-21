@@ -9,8 +9,8 @@ import { jsx } from '@emotion/react'
 import { extractCritical } from '@emotion/server'
 
 interface Props {
-  ids: any;
-  css: any;
+  ids: any
+  css: any
 }
 
 export default class MyDocument extends Document<Props> {

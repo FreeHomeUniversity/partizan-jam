@@ -7,7 +7,7 @@ import { Box } from '../../components/Box'
 import { getAllSongs } from '../../lib/api'
 import { linkResolver, htmlSerializer } from '../../lib/prismic'
 
-export default function SongsPage({ title, songs }) {
+export default function StoriesPage({ title, songs }) {
   return (
     <>
       <Head>
@@ -18,12 +18,11 @@ export default function SongsPage({ title, songs }) {
         <Box>
           <h1 className="text-5xl font-bold">{title}</h1>
         </Box>
-        <Box p={0} className="grid-cols-3">
+        <Box p={0} className="grid-cols-2">
           {songs.map((song) => (
             <Box key={song.id}>
-              <Link href={`/songs/${song.uid}`} passHref>
+              <Link href={`/stories/${song.uid}`} passHref>
                 <a>
-                  <img src={song.thumbnail.url} alt={song.thumbnail.alt} />
                   <h3>{song.title}</h3>
                   <div dangerouslySetInnerHTML={{ __html: song.description }} />
                 </a>
@@ -39,7 +38,7 @@ export default function SongsPage({ title, songs }) {
 export async function getStaticProps({ preview = false, previewData }) {
   const prismicSongs = await getAllSongs(previewData)
 
-  const title = 'Songs'
+  const title = 'Stories'
 
   const songs = []
 
@@ -53,10 +52,6 @@ export async function getStaticProps({ preview = false, previewData }) {
         linkResolver,
         htmlSerializer
       ),
-      thumbnail: {
-        url: node.video.thumbnail_url,
-        alt: node.video.title || '',
-      },
     })
   })
 

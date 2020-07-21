@@ -33,4 +33,8 @@ body,
   place-content: start;
 }
 
+.place-stretch {
+  place-content: stretch;
+}
+
 @tailwind utilities;

@@ -42,7 +42,7 @@ async function fetchAPI(query, { previewData, variables }: any = {}) {
 
 export async function getHomepage(previewData) {
   const data = await fetchAPI(
-  `
+    `
     query HomepageQuery {
       allHomepages {
         edges {
@@ -63,7 +63,7 @@ export async function getHomepage(previewData) {
 
 export async function getAllSongs(previewData) {
   const data = await fetchAPI(
-  `
+    `
     query AllSongsQuery {
       allSongs {
         edges {
@@ -84,12 +84,12 @@ export async function getAllSongs(previewData) {
     { previewData }
   )
 
-  return data.allSongs?.edges || [];
+  return data.allSongs?.edges || []
 }
 
 export async function getSong(uid, previewData) {
   const data = await fetchAPI(
-  `
+    `
     query SongQuery($uid: String!) {
       allSongs(uid: $uid) {
         edges {
@@ -159,7 +159,7 @@ export async function getSong(uid, previewData) {
     { previewData, variables: { uid } }
   )
 
-  return data.allSongs.edges?.[0]?.node;
+  return data.allSongs.edges?.[0]?.node
 }
 
 export const FHUClient = Prismic.client(FHU_API_URL, {
