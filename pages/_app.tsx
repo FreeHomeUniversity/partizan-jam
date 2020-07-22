@@ -3,7 +3,6 @@ import { AppProps } from 'next/app'
 import Head from 'next/head'
 import Link from 'next/link'
 import { css } from '@emotion/react'
-import styled from '@emotion/styled'
 import create from 'zustand'
 
 import Box from '../components/Box'
@@ -28,16 +27,6 @@ const [useTheme] = create<State>((set) => ({
   fade: () => set((state) => ({ outline: state.outline > 0 ? state.outline - 1 : 0 })),
 }))
 
-const dinamicProps = (props) => css`
-  --color: ${props.blackTheme ? `rgba(255, 255, 255, 1)` : `rgba(0, 0, 0, 1)`};
-  --backgound-color: ${props.blackTheme ? `rgba(0, 0, 0, 1)` : `rgba(255, 255, 255, 1)`};
-  --outline-color: rgba(151, 151, 151, ${props.outline / 100});
-`
-
-const Wrapper = styled.div`
-  ${dinamicProps};
-`
-
 export default function MyApp({ Component, pageProps }: AppProps): React.ReactNode {
   const blackTheme = useTheme((state) => state.black)
   const toggleTheme = useTheme((state) => state.toggle)
@@ -57,7 +46,14 @@ export default function MyApp({ Component, pageProps }: AppProps): React.ReactNo
   }, [])
 
   return (
-    <Wrapper className="p-2 md:p-4 theme" blackTheme={blackTheme} outline={outline}>
+    <div
+      className="p-2 md:p-4 theme"
+      css={css`
+        --color: ${blackTheme ? `rgba(255, 255, 255, 1)` : `rgba(0, 0, 0, 1)`};
+        --backgound-color: ${blackTheme ? `rgba(0, 0, 0, 1)` : `rgba(255, 255, 255, 1)`};
+        --outline-color: rgba(151, 151, 151, ${outline / 100});
+      `}
+    >
       <Head>
         <title>TransEuropean Partizan Jam</title>
       </Head>
@@ -93,6 +89,6 @@ export default function MyApp({ Component, pageProps }: AppProps): React.ReactNo
           </Box>
         </Box>
       </div>
-    </Wrapper>
+    </div>
   )
 }
