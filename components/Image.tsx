@@ -14,11 +14,7 @@ const RATIOS = {
   '3:2': '66.66%',
   '8.5': '62.5%',
 }
-export const Image: React.FC<ImageProps> = ({
-  src,
-  alt = '',
-  aspectRatio = '4:3',
-}) => {
+export const Image: React.FC<ImageProps> = ({ src, alt = '', aspectRatio = '4:3' }) => {
   const srcSet = []
 
   if (src.includes('prismic')) {

@@ -35,9 +35,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
             <Box
               key={button}
               className={`px-8 ${
-                idx !== current
-                  ? 'cursor-pointer text-gray-600 hover:text-blue-600'
-                  : 'cursor-default'
+                idx !== current ? 'cursor-pointer text-gray-600 hover:text-blue-600' : 'cursor-default'
               }`}
             >
               <button
@@ -66,10 +64,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
                 align-content: flex-start;
               `}
             >
-              <div
-                className="max-w-5xl"
-                dangerouslySetInnerHTML={{ __html: tab }}
-              />
+              <div className="max-w-5xl" dangerouslySetInnerHTML={{ __html: tab }} />
             </Box>
           ))}
         </motion.div>

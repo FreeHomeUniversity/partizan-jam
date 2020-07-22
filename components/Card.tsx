@@ -12,16 +12,11 @@ export type Props = {
   subtitle?: string
 }
 
-export const Content: React.FC<Omit<Props, 'href'>> = ({
-  image,
-  alt,
-  title,
-  subtitle,
-}) => {
+export const Content: React.FC<Omit<Props, 'href'>> = ({ image, alt, title, subtitle }) => {
   return (
     <Box className="w-full h-full space-y-4">
       {image && <Image src={image} alt={alt} />}
-      <h3 className="text-2xl font-bold">{title}</h3>
+      <h3>{title}</h3>
       {subtitle && <div dangerouslySetInnerHTML={{ __html: subtitle }} />}
     </Box>
   )

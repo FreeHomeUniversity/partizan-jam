@@ -36,10 +36,7 @@ export default function About({ aboutKots, title, body }) {
                   <>
                     {items.map(({ imagesrc, caption }) => (
                       <Box key={imagesrc.url}>
-                        <img
-                          src={imagesrc.url}
-                          alt={caption?.[0]?.text || ''}
-                        />
+                        <img src={imagesrc.url} alt={caption?.[0]?.text || ''} />
                       </Box>
                     ))}
                   </>

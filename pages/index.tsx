@@ -6,13 +6,7 @@ import { truncate } from 'lodash'
 
 import { Box } from '../components/Box'
 import { Card } from '../components/Card'
-import {
-  getHomepage,
-  getAllSongs,
-  getAboutKots,
-  getAboutFHU,
-  getAboutTEPJ,
-} from '../lib/api'
+import { getHomepage, getAllSongs, getAboutKots, getAboutFHU, getAboutTEPJ } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
 
 export default function Home({ title, songs, kots, fhu, tepj }) {
@@ -24,27 +18,15 @@ export default function Home({ title, songs, kots, fhu, tepj }) {
       </Head>
       <Box p={0}>
         <Box>
-          <h1 className="text-5xl font-bold">{title}</h1>
+          <h1>{title}</h1>
         </Box>
-        <Box p={0} className="grid-cols-3">
-          <Card
-            href={'/free-home-university'}
-            title={fhu.title}
-            subtitle={fhu.description}
-          />
-          <Card
-            href={'/arkadiy-kots-band'}
-            title={kots.title}
-            subtitle={kots.description}
-          />
-          <Card
-            href={'/transeuropean-partizan-jam'}
-            title={tepj.title}
-            subtitle={tepj.description}
-          />
+        <Box p={0} className="grid-cols-none md:grid-cols-3">
+          <Card href={'/free-home-university'} title={fhu.title} subtitle={fhu.description} />
+          <Card href={'/arkadiy-kots-band'} title={kots.title} subtitle={kots.description} />
+          <Card href={'/transeuropean-partizan-jam'} title={tepj.title} subtitle={tepj.description} />
         </Box>
         <Box>
-          <h2 className="text-3xl font-black">Songs</h2>
+          <h2>Songs</h2>
         </Box>
         <Box p={0} className="grid-cols-3">
           {songs.map((song) => (
@@ -59,16 +41,11 @@ export default function Home({ title, songs, kots, fhu, tepj }) {
           ))}
         </Box>
         <Box>
-          <h2 className="text-3xl font-black">Stories</h2>
+          <h2>Stories</h2>
         </Box>
         <Box p={0} className="grid-cols-2">
           {songs.map((song) => (
-            <Card
-              key={song.id}
-              href={`/stories/${song.uid}`}
-              title={song.title}
-              subtitle={song.description}
-            />
+            <Card key={song.id} href={`/stories/${song.uid}`} title={song.title} subtitle={song.description} />
           ))}
         </Box>
       </Box>
@@ -85,33 +62,24 @@ export async function getStaticProps({ preview = false, previewData }) {
 
   const kots = {
     title: RichText.asText(aboutKots.data.title),
-    description: truncate(
-      RichText.asText(aboutKots.data.body[0]?.primary?.text || []),
-      {
-        length: 240,
-        separator: /,? +/,
-      }
-    ),
+    description: truncate(RichText.asText(aboutKots.data.body[0]?.primary?.text || []), {
+      length: 240,
+      separator: /,? +/,
+    }),
   }
   const fhu = {
     title: RichText.asText(aboutFHU.data.title),
-    description: truncate(
-      RichText.asText(aboutFHU.data.body[0]?.primary?.text || []),
-      {
-        length: 240,
-        separator: /,? +/,
-      }
-    ),
+    description: truncate(RichText.asText(aboutFHU.data.body[0]?.primary?.text || []), {
+      length: 240,
+      separator: /,? +/,
+    }),
   }
   const tepj = {
     title: RichText.asText(aboutTEPJ.data.title),
-    description: truncate(
-      RichText.asText(aboutTEPJ.data.body[1]?.primary?.text || []),
-      {
-        length: 240,
-        separator: /,? +/,
-      }
-    ),
+    description: truncate(RichText.asText(aboutTEPJ.data.body[1]?.primary?.text || []), {
+      length: 240,
+      separator: /,? +/,
+    }),
   }
 
   const title = RichText.asText(homepage.title)
@@ -123,11 +91,7 @@ export async function getStaticProps({ preview = false, previewData }) {
       id: node._meta.id,
       uid: node._meta.uid,
       title: RichText.asText(node.title),
-      description: RichText.asHtml(
-        node.description,
-        linkResolver,
-        htmlSerializer
-      ),
+      description: RichText.asHtml(node.description, linkResolver, htmlSerializer),
       thumbnail: {
         url: node.video.thumbnail_url,
         alt: node.video.title || title,

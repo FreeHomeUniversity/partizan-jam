@@ -32,11 +32,7 @@ export default function SongPage({ title, song, stories, songs }) {
             grid-template-columns: 2fr 1fr;
           `}
         >
-          <Tabs
-            title={title}
-            buttons={stories.map((x) => x.language)}
-            tabs={stories.map((x) => x.text)}
-          />
+          <Tabs title={title} buttons={stories.map((x) => x.language)} tabs={stories.map((x) => x.text)} />
           <Box p={0} className="place-start">
             <Box>
               <h3 className="text-2xl font-bold">Songs</h3>
@@ -48,9 +44,7 @@ export default function SongPage({ title, song, stories, songs }) {
                     <a>
                       <img src={song.thumbnail.url} alt={song.thumbnail.alt} />
                       <h3>{song.title}</h3>
-                      <div
-                        dangerouslySetInnerHTML={{ __html: song.description }}
-                      />
+                      <div dangerouslySetInnerHTML={{ __html: song.description }} />
                     </a>
                   </Link>
                 </Box>
@@ -74,11 +68,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
         id: node._meta.id,
         uid: node._meta.uid,
         title: RichText.asText(node.title),
-        description: RichText.asHtml(
-          node.description,
-          linkResolver,
-          htmlSerializer
-        ),
+        description: RichText.asHtml(node.description, linkResolver, htmlSerializer),
         thumbnail: {
           url: node.video.thumbnail_url,
           alt: node.video.title || '',

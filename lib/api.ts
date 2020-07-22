@@ -13,20 +13,18 @@ export const PrismicClient = Prismic.client(REF_API_URL, {
   accessToken: API_TOKEN,
 })
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 async function fetchAPI(query, { previewData, variables }: any = {}) {
   const prismicAPI = await PrismicClient.getApi()
 
-  const res = await fetch(
-    `${GRAPHQL_API_URL}?query=${query}&variables=${JSON.stringify(variables)}`,
-    {
-      headers: {
-        'Prismic-Ref': previewData?.ref || prismicAPI.masterRef.ref,
-        'Content-Type': 'application/json',
-        'Accept-Language': API_LOCALE,
-        Authorization: `Token ${API_TOKEN}`,
-      },
-    }
-  )
+  const res = await fetch(`${GRAPHQL_API_URL}?query=${query}&variables=${JSON.stringify(variables)}`, {
+    headers: {
+      'Prismic-Ref': previewData?.ref || prismicAPI.masterRef.ref,
+      'Content-Type': 'application/json',
+      'Accept-Language': API_LOCALE,
+      Authorization: `Token ${API_TOKEN}`,
+    },
+  })
 
   if (res.status !== 200) {
     console.log(await res.text())
@@ -56,7 +54,7 @@ export async function getHomepage(previewData) {
       }
     }
   `,
-    { previewData }
+    { previewData },
   )
 
   return data.allHomepages.edges[0].node
@@ -82,7 +80,7 @@ export async function getAllSongs(previewData) {
       }
     }
   `,
-    { previewData }
+    { previewData },
   )
 
   return data.allSongs?.edges || []
@@ -157,10 +155,36 @@ export async function getSong(uid, previewData) {
       }
     }
   `,
-    { previewData, variables: { uid } }
+    { previewData, variables: { uid } },
   )
 
   return data.allSongs.edges?.[0]?.node
+}
+
+export async function getAllMusicians(previewData) {
+  const data = await fetchAPI(
+    `
+    query AllSongsQuery {
+      allSongs {
+        edges {
+          node {
+            title
+            description
+            video
+            _meta {
+              id
+              uid
+              tags
+            }
+          }
+        }
+      }
+    }
+  `,
+    { previewData },
+  )
+
+  return data.allSongs?.edges || []
 }
 
 export const FHUClient = Prismic.client(FHU_API_URL, {
@@ -169,27 +193,21 @@ export const FHUClient = Prismic.client(FHU_API_URL, {
 
 export async function getAboutFHU() {
   const api = await FHUClient.getApi()
-  const { results } = await api.query(
-    Prismic.Predicates.at('document.type', 'about')
-  )
+  const { results } = await api.query(Prismic.Predicates.at('document.type', 'about'))
 
   return results[0]
 }
 
 export async function getAboutTEPJ() {
   const api = await FHUClient.getApi()
-  const { results } = await api.query(
-    Prismic.Predicates.at('my.text.uid', 'transeuropean-parizan-jam')
-  )
+  const { results } = await api.query(Prismic.Predicates.at('my.text.uid', 'transeuropean-parizan-jam'))
 
   return results[0]
 }
 
 export async function getAboutKots() {
   const api = await FHUClient.getApi()
-  const { results } = await api.query(
-    Prismic.Predicates.at('my.text.uid', 'arkadiy-kots-band')
-  )
+  const { results } = await api.query(Prismic.Predicates.at('my.text.uid', 'arkadiy-kots-band'))
 
   return results[0]
 }

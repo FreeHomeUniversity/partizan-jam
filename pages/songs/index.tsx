@@ -48,11 +48,7 @@ export async function getStaticProps({ preview = false, previewData }) {
       id: node._meta.id,
       uid: node._meta.uid,
       title: RichText.asText(node.title),
-      description: RichText.asHtml(
-        node.description,
-        linkResolver,
-        htmlSerializer
-      ),
+      description: RichText.asHtml(node.description, linkResolver, htmlSerializer),
       thumbnail: {
         url: node.video.thumbnail_url,
         alt: node.video.title || '',

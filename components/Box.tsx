@@ -5,15 +5,9 @@ export type BoxProps = {
   className?: React.HTMLAttributes<any>['className']
   children: React.ReactNode
 }
-export const Box: React.FC<BoxProps> = ({
-  children,
-  className = '',
-  p = 4,
-}) => {
+export const Box: React.FC<BoxProps> = ({ children, className = '', p = 4 }) => {
   return (
-    <div
-      className={`grid place-stretch p-${p} theme theme-outline ${className}`}
-    >
+    <div className={`grid place-stretch ${p === 0 ? 'p-0' : `p-${p / 2} md:p-${p}`} theme theme-outline ${className}`}>
       {children}
     </div>
   )

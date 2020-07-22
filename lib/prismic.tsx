@@ -37,17 +37,10 @@ export function htmlSerializer(type, element, content, children) {
     case Elements.oList:
       return `<ol>${children.join('')}</ol>`
     case Elements.image:
-      var linkUrl = element.linkTo
-        ? Link.url(element.linkTo, module.exports.linkResolver)
-        : null
-      var linkTarget =
-        element.linkTo && element.linkTo.target
-          ? `target="${element.linkTo.target}" rel="noopener"`
-          : ''
+      var linkUrl = element.linkTo ? Link.url(element.linkTo, module.exports.linkResolver) : null
+      var linkTarget = element.linkTo && element.linkTo.target ? `target="${element.linkTo.target}" rel="noopener"` : ''
       var wrapperClassList = [element.label || '', 'block-img']
-      var img = `<img src="${element.url}" alt="${
-        element.alt || ''
-      }" copyright="${element.copyright || ''}">`
+      var img = `<img src="${element.url}" alt="${element.alt || ''}" copyright="${element.copyright || ''}">`
       return `
         <p class="${wrapperClassList.join(' ')}">
           ${linkUrl ? `<a ${linkTarget} href="${linkUrl}">${img}</a>` : img}
@@ -63,9 +56,7 @@ export function htmlSerializer(type, element, content, children) {
         </div>
       `
     case Elements.hyperlink:
-      var target = element.data.target
-        ? `target="${element.data.target}" rel="noopener"`
-        : ''
+      var target = element.data.target ? `target="${element.data.target}" rel="noopener"` : ''
       var linkUrl = Link.url(element.data, linkResolver)
       return `<a ${target} href="${linkUrl}">${children.join('')}</a>`
     case Elements.label:

@@ -25,8 +25,39 @@ h1,
 h2,
 h3 {
   font-family: 'MFred', sans-serif;
-  line-height: 0.75;
-  transform: translateY(25%);
+  line-height: 0.91625em;
+  padding: 0.05px 0;
+}
+
+h1::before,
+h2::before,
+h3::before {
+  content: '';
+  margin-top: 0.0241114583333333em;
+  display: block;
+  height: 0;
+}
+
+h1::after,
+h2::after,
+h3::after {
+  content: '';
+  margin-bottom: -0.20888854166666668em;
+  display: block;
+  height: 0;
+}
+
+h1 {
+  font-size: 3rem;
+  @apply text-heading-1;
+}
+h2 {
+  font-size: 1.875rem;
+  @apply text-heading-2;
+}
+h3 {
+  font-size: 1.5rem;
+  @apply text-heading-3;
 }
 
 .theme-outline {

@@ -26,10 +26,7 @@ export default function StoryPage({ title, song, stories, description }) {
             <Box key={story.language}>
               <>
                 <h3>{story.language}</h3>
-                <div
-                  className="max-w-3xl text-md"
-                  dangerouslySetInnerHTML={{ __html: story.text }}
-                />
+                <div className="max-w-3xl text-md" dangerouslySetInnerHTML={{ __html: story.text }} />
               </>
             </Box>
           ))}
@@ -55,11 +52,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   const song = await getSong(params.uid, previewData)
 
   const title = RichText.asText(song.story.title)
-  const description = RichText.asHtml(
-    song.story.description,
-    linkResolver,
-    htmlSerializer
-  )
+  const description = RichText.asHtml(song.story.description, linkResolver, htmlSerializer)
 
   const stories = []
 

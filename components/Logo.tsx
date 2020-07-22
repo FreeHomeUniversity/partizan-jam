@@ -2,14 +2,7 @@ import * as React from 'react'
 
 const Logo: React.FC<React.SVGAttributes<any>> = (props) => {
   return (
-    <svg
-      width="100%"
-      height="100%"
-      viewBox="0 0 20 417"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      {...props}
-    >
+    <svg width="100%" height="100%" viewBox="0 0 20 417" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
       <path
         d="M0.445312 403.277L4.20703 403.277L4.20703 407.918L19.3359 407.918L19.3359 411.727L4.20703 411.727L4.20703 416.379L0.445312 416.379L0.445312 403.277Z"
         fill="currentColor"
@@ -78,10 +71,7 @@ const Logo: React.FC<React.SVGAttributes<any>> = (props) => {
         d="M0.4453 122.885L4.20702 122.885L4.20702 127.526L19.3359 127.526L19.3359 131.334L4.20702 131.334L4.20702 135.987L0.4453 135.987L0.4453 122.885Z"
         fill="currentColor"
       />
-      <path
-        d="M0.4453 120.045L0.445299 116.248L19.3359 116.248L19.3359 120.045L0.4453 120.045Z"
-        fill="currentColor"
-      />
+      <path d="M0.4453 120.045L0.445299 116.248L19.3359 116.248L19.3359 120.045L0.4453 120.045Z" fill="currentColor" />
       <path
         d="M0.445299 100.118L15.5625 107.384L15.5625 100.118L19.3359 100.118L19.3359 113.407L4.20702 106.141L4.20702 113.407L0.445299 113.407L0.445299 100.118Z"
         fill="currentColor"
