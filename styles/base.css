@@ -16,9 +16,15 @@ html {
 html,
 body,
 .theme {
-  @apply transition-colors duration-700 ease-in-out;
+  @apply transition-colors duration-300 ease-in-out;
   background-color: var(--backgound-color);
   color: var(--color);
+  will-change: background-color, color;
+}
+
+[data-oembed] > iframe {
+  width: 100% !important;
+  height: 40vmax !important;
 }
 
 h1,
@@ -61,8 +67,11 @@ h3 {
 }
 
 .theme-outline {
-  outline: 2px solid var(--outline-color);
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: var(--outline-color);
   outline-offset: -1px;
+  will-change: outline-color;
 }
 
 .place-stretch {

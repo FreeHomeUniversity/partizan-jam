@@ -23,8 +23,8 @@ type State = {
 const [useTheme] = create<State>((set) => ({
   black: false,
   toggle: () => set((state) => ({ black: !state.black })),
-  outline: 100,
-  fade: () => set((state) => ({ outline: state.outline > 0 ? state.outline - 1 : 0 })),
+  outline: 127,
+  fade: () => set((state) => ({ outline: state.outline > 0 ? state.outline - 5 : 0 })),
 }))
 
 export default function MyApp({ Component, pageProps }: AppProps): React.ReactNode {
@@ -49,9 +49,15 @@ export default function MyApp({ Component, pageProps }: AppProps): React.ReactNo
     <div
       className="p-2 md:p-4 theme"
       css={css`
+        min-height: -webkit-fill-available;
+        min-height: 100vh;
         --color: ${blackTheme ? `rgba(255, 255, 255, 1)` : `rgba(0, 0, 0, 1)`};
         --backgound-color: ${blackTheme ? `rgba(0, 0, 0, 1)` : `rgba(255, 255, 255, 1)`};
-        --outline-color: rgba(151, 151, 151, ${outline / 100});
+        --outline-color: rgb(
+          ${blackTheme ? 0 + outline : 255 - outline},
+          ${blackTheme ? 0 + outline : 255 - outline},
+          ${blackTheme ? 0 + outline : 255 - outline}
+        );
       `}
     >
       <Head>

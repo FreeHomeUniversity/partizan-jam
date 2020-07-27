@@ -1,39 +1,35 @@
 import * as React from 'react'
+import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
-import { InferGetStaticPropsType } from 'next'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
-import { getAllSongs } from '../../lib/api'
+import { getAllMusicians } from '../../lib/api'
 import { linkResolver, htmlSerializer } from '../../lib/prismic'
 
 export async function getStaticProps({ preview = false, previewData }) {
-  const prismicSongs = await getAllSongs(previewData)
+  const prismicMusicians = await getAllMusicians(previewData)
 
-  const title = 'Songs'
+  const title = 'Musicians'
 
-  const songs = []
+  const musicians = []
 
-  prismicSongs.forEach(({ node }) => {
-    songs.push({
+  prismicMusicians.forEach(({ node }) => {
+    musicians.push({
       id: node._meta.id,
       uid: node._meta.uid,
       title: RichText.asText(node.title),
       description: RichText.asHtml(node.description, linkResolver, htmlSerializer),
-      thumbnail: {
-        url: node.video.thumbnail_url,
-        alt: node.video.title || RichText.asText(node.title),
-      },
     })
   })
 
   return {
-    props: { preview, title, songs },
+    props: { preview, title, musicians },
   }
 }
 
-export default function SongsPage({ title, songs }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function StoriesPage({ title, musicians }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
       <Head>
@@ -44,15 +40,16 @@ export default function SongsPage({ title, songs }: InferGetStaticPropsType<type
         <Box>
           <h1>{title}</h1>
         </Box>
-        <Box p={0} className="grid-cols-3">
-          {songs.map((song) => (
+        <Box p={0} className="grid-cols-2">
+          {musicians.map((musician) => (
             <Card
-              key={song.id}
-              image={song.thumbnail.url}
-              alt={song.thumbnail.alt}
-              href={`/songs/${song.uid}`}
-              title={song.title}
-              subtitle={song.description}
+              key={musician.id}
+              image={musician.thumbnail.url}
+              alt={musician.thumbnail.alt}
+              href={`/musicians/[uid]`}
+              as={`/musicians/${musician.uid}`}
+              title={musician.title}
+              subtitle={musician.description}
             />
           ))}
         </Box>

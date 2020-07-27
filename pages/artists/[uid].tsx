@@ -1,7 +1,6 @@
 import * as React from 'react'
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
-import { css } from '@emotion/react'
 import { InferGetStaticPropsType } from 'next'
 
 import { Box } from '../../components/Box'
@@ -63,27 +62,10 @@ export default function StoryPage({
         </Box>
         <Box p={0} className="place-stretch">
           {stories.map((story) => (
-            <Box p={0} key={story.language}>
+            <Box key={story.language}>
               <>
-                <Box>
-                  <h2>{story.language}</h2>
-                </Box>
-                <Box className="place-center">
-                  <div
-                    className="max-w-3xl prose"
-                    css={css`
-                      @media (min-width: 768px) {
-                        font-size: 1.125rem;
-                        line-height: 1.7777778;
-                      }
-                      @media (min-width: 1024px) {
-                        font-size: 1.25rem;
-                        line-height: 1.8;
-                      }
-                    `}
-                    dangerouslySetInnerHTML={{ __html: story.text }}
-                  />
-                </Box>
+                <h3>{story.language}</h3>
+                <div className="max-w-3xl text-md" dangerouslySetInnerHTML={{ __html: story.text }} />
               </>
             </Box>
           ))}
@@ -97,8 +79,8 @@ export default function StoryPage({
           alt={title}
           href={`/songs/[uid]`}
           as={`/songs/${song.uid}`}
-          title={title}
-          subtitle={description}
+          title={song.title}
+          subtitle={song.description}
         />
       </Box>
     </>

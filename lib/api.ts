@@ -41,19 +41,19 @@ async function fetchAPI(query, { previewData, variables }: any = {}) {
 
 export async function getHomepage(previewData) {
   const data = await fetchAPI(
-    `
-    query HomepageQuery {
-      allHomepages {
-        edges {
-          node {
-            title
-            description
-            image
+    /* GraphQL */ `
+      query HomepageQuery {
+        allHomepages {
+          edges {
+            node {
+              title
+              description
+              image
+            }
           }
         }
       }
-    }
-  `,
+    `,
     { previewData },
   )
 
@@ -62,129 +62,209 @@ export async function getHomepage(previewData) {
 
 export async function getAllSongs(previewData) {
   const data = await fetchAPI(
-    `
-    query AllSongsQuery {
-      allSongs {
-        edges {
-          node {
-            title
-            description
-            video
-            _meta {
-              id
-              uid
-              tags
+    /* GraphQL */ `
+      query AllSongsQuery {
+        allSongs {
+          edges {
+            node {
+              title
+              description
+              video
+              _meta {
+                id
+                uid
+                tags
+              }
             }
           }
         }
       }
-    }
-  `,
+    `,
     { previewData },
   )
 
-  return data.allSongs?.edges || []
+  return data.allSongs.edges || []
 }
 
 export async function getSong(uid, previewData) {
   const data = await fetchAPI(
-    `
-    query SongQuery($uid: String!) {
-      allSongs(uid: $uid) {
-        edges {
-          node {
-            title
-            description
-            video
-            story {
-              ... on Story {
-                title
-                description
-                stories {
-                  language
-                  text
-                }
-                _meta {
-                  id
-                  uid
-                }
+    /* GraphQL */ `
+      query SongQuery($uid: String!, $lang: String!) {
+        song(uid: $uid, lang: $lang) {
+          title
+          description
+          video
+          story {
+            ... on Story {
+              title
+              description
+              stories {
+                language
+                text
+              }
+              _meta {
+                id
+                uid
               }
             }
-            musicians {
-              ... on SongMusicians {
-                musician {
-                  ... on Musician {
-                    title
-                    description
-                    image
-                    _meta {
-                      id
-                      uid
-                    }
+          }
+          musicians {
+            ... on SongMusicians {
+              musician {
+                ... on Musician {
+                  title
+                  description
+                  image
+                  _meta {
+                    id
+                    uid
                   }
                 }
               }
             }
-            artist {
-              ... on Artist {
-                title
-                description
-                image
-                body {
-                  ... on ArtistBodyArtwork {
-                    primary {
-                      artwork_title
-                      artwork_description
-                      artwork_image
-                    }
+          }
+          artist {
+            ... on Artist {
+              title
+              description
+              image
+              body {
+                ... on ArtistBodyArtwork {
+                  primary {
+                    artwork_title
+                    artwork_description
+                    artwork_image
+                  }
+                  fields {
+                    artwork_slider_image
+                    artwork_slider_description
                   }
                 }
-                _meta {
-                  id
-                  uid
-                }
+              }
+              _meta {
+                id
+                uid
               }
             }
-            _meta {
-              id
-              uid
-              tags
-            }
+          }
+          _meta {
+            id
+            uid
+            tags
           }
         }
       }
-    }
-  `,
-    { previewData, variables: { uid } },
+    `,
+    { previewData, variables: { uid, lang: API_LOCALE } },
   )
 
-  return data.allSongs.edges?.[0]?.node
+  return data.song
 }
 
 export async function getAllMusicians(previewData) {
   const data = await fetchAPI(
-    `
-    query AllSongsQuery {
-      allSongs {
-        edges {
-          node {
-            title
-            description
-            video
-            _meta {
-              id
-              uid
-              tags
+    /* GraphQL */ `
+      query AllMusiciansQuery {
+        allMusicians {
+          edges {
+            node {
+              title
+              description
+              image
+              _meta {
+                id
+                uid
+              }
             }
           }
         }
       }
-    }
-  `,
+    `,
     { previewData },
   )
 
-  return data.allSongs?.edges || []
+  return data.allMusicians.edges || []
+}
+
+export async function getMusician(uid, previewData) {
+  const data = await fetchAPI(
+    /* GraphQL */ `
+      query MusicianQuery($uid: String!, $lang: String!) {
+        musician(uid: $uid, lang: $lang) {
+          title
+          description
+          image
+          _meta {
+            id
+            uid
+          }
+        }
+      }
+    `,
+    { previewData, variables: { uid, lang: API_LOCALE } },
+  )
+
+  return data.musician
+}
+
+export async function getAllArtists(previewData) {
+  const data = await fetchAPI(
+    /* GraphQL */ `
+      query AllArtistsQuery {
+        allArtists {
+          edges {
+            node {
+              title
+              description
+              image
+              _meta {
+                id
+                uid
+              }
+            }
+          }
+        }
+      }
+    `,
+    { previewData },
+  )
+
+  return data.allArtists.edges || []
+}
+
+export async function getArtist(uid, previewData) {
+  const data = await fetchAPI(
+    /* GraphQL */ `
+    query ArtistQuery ($uid: String!, lang: String!) {
+      artist(uid: $uid, lang: $lang) {
+        title
+        description
+        image
+        body {
+          ...on ArtistBodyArtwork {
+            primary {
+              artwork_title
+              artwork_description
+              artwork_image
+            }
+            fields {
+              artwork_slider_image
+              artwork_slider_description
+            }
+          }
+        }
+        _meta {
+          id
+          uid
+  
+        }
+      }
+    }
+  `,
+    { previewData, variables: { uid, lang: API_LOCALE } },
+  )
+
+  return data.artist
 }
 
 export const FHUClient = Prismic.client(FHU_API_URL, {

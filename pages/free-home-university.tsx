@@ -1,11 +1,40 @@
+import * as React from 'react'
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
+import { InferGetStaticPropsType } from 'next'
 
 import { getAboutFHU } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
 import { Box } from '../components/Box'
 
-export default function About({ aboutFHU, title, body }) {
+export async function getStaticProps() {
+  const aboutFHU = await getAboutFHU()
+
+  const title = RichText.asText(aboutFHU.data.title)
+  const body = []
+
+  aboutFHU.data.body.forEach(({ slice_type, items, primary }) => {
+    switch (slice_type) {
+      case 'text':
+        body.push({
+          slice_type,
+          html: RichText.asHtml(primary.text, linkResolver, htmlSerializer),
+        })
+        break
+      case 'image':
+        body.push({ slice_type, items })
+        break
+      default:
+        break
+    }
+  })
+
+  return {
+    props: { aboutFHU, title, body },
+  }
+}
+
+export default function About({ aboutFHU, title, body }: InferGetStaticPropsType<typeof getStaticProps>) {
   const { image } = aboutFHU.data
 
   return (
@@ -48,31 +77,4 @@ export default function About({ aboutFHU, title, body }) {
       </div>
     </>
   )
-}
-
-export async function getStaticProps() {
-  const aboutFHU = await getAboutFHU()
-
-  const title = RichText.asText(aboutFHU.data.title)
-  const body = []
-
-  aboutFHU.data.body.forEach(({ slice_type, items, primary }) => {
-    switch (slice_type) {
-      case 'text':
-        body.push({
-          slice_type,
-          html: RichText.asHtml(primary.text, linkResolver, htmlSerializer),
-        })
-        break
-      case 'image':
-        body.push({ slice_type, items })
-        break
-      default:
-        break
-    }
-  })
-
-  return {
-    props: { aboutFHU, title, body },
-  }
 }

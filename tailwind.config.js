@@ -1,6 +1,19 @@
 module.exports = {
   purge: ['./components/**/*.{js,ts,jsx,tsx}', './pages/**/*.{js,ts,jsx,tsx}'],
   theme: {
+    typography: {
+      default: {
+        css: {
+          color: 'var(--color)',
+          a: {
+            color: '#a21b20',
+            '&:hover': {
+              color: '#2e447f',
+            },
+          },
+        },
+      },
+    },
     extend: {
       colors: {
         'theme-red': {

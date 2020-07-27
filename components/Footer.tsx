@@ -1,7 +1,7 @@
 import * as React from 'react'
-import Link from 'next/link'
 
 import Box from './Box'
+import Card from './Card'
 
 const LINKS = [
   {
@@ -22,18 +22,14 @@ type FooterProps = {}
 
 const Footer: React.FC<FooterProps> = () => {
   return (
-    <Box p={0}>
+    <Box p={0} className="items-end">
       <footer>
         <nav>
           <ul className="grid grid-cols-3">
             {LINKS.map((link) => (
-              <Box key={link.href}>
-                <li className="font-bold">
-                  <Link href={link.href} passHref>
-                    <a>{link.title}</a>
-                  </Link>
-                </li>
-              </Box>
+              <li key={link.href}>
+                <Card href={link.href} title={link.title} heading="h2" />
+              </li>
             ))}
           </ul>
         </nav>

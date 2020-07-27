@@ -37,10 +37,11 @@ export function htmlSerializer(type, element, content, children) {
     case Elements.oList:
       return `<ol>${children.join('')}</ol>`
     case Elements.image:
-      var linkUrl = element.linkTo ? Link.url(element.linkTo, module.exports.linkResolver) : null
-      var linkTarget = element.linkTo && element.linkTo.target ? `target="${element.linkTo.target}" rel="noopener"` : ''
-      var wrapperClassList = [element.label || '', 'block-img']
-      var img = `<img src="${element.url}" alt="${element.alt || ''}" copyright="${element.copyright || ''}">`
+      const linkUrl = element.linkTo ? Link.url(element.linkTo, module.exports.linkResolver) : null
+      const linkTarget =
+        element.linkTo && element.linkTo.target ? `target="${element.linkTo.target}" rel="noopener"` : ''
+      const wrapperClassList = [element.label || '', 'block-img']
+      const img = `<img src="${element.url}" alt="${element.alt || ''}" copyright="${element.copyright || ''}">`
       return `
         <p class="${wrapperClassList.join(' ')}">
           ${linkUrl ? `<a ${linkTarget} href="${linkUrl}">${img}</a>` : img}
@@ -51,16 +52,17 @@ export function htmlSerializer(type, element, content, children) {
         <div data-oembed="${element.oembed.embed_url}"
           data-oembed-type="${element.oembed.type}"
           data-oembed-provider="${element.oembed.provider_name}"
+          class="grid p-4 place-stetch"
         >
           ${element.oembed.html}
         </div>
       `
     case Elements.hyperlink:
-      var target = element.data.target ? `target="${element.data.target}" rel="noopener"` : ''
-      var linkUrl = Link.url(element.data, linkResolver)
-      return `<a ${target} href="${linkUrl}">${children.join('')}</a>`
+      const target = element.data.target ? `target="${element.data.target}" rel="noopener"` : ''
+      const url = Link.url(element.data, linkResolver)
+      return `<a ${target} href="${url}">${children.join('')}</a>`
     case Elements.label:
-      var label = element.data.label ? ` class="${element.data.label}"` : ''
+      const label = element.data.label ? ` class="${element.data.label}"` : ''
       return `<span ${label}>${children.join('')}</span>`
     case Elements.span:
       return content ? content.replace(/\n/g, '<br />') : ''

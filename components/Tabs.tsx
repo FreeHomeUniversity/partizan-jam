@@ -35,11 +35,15 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
             <Box
               key={button}
               className={`px-8 ${
-                idx !== current ? 'cursor-pointer text-gray-600 hover:text-blue-600' : 'cursor-default'
+                idx !== current
+                  ? 'transition-colors duration-300 ease-out hover:bg-theme-blue-600 hover:text-white'
+                  : 'text-theme-red-600'
               }`}
             >
               <button
-                className="text-3xl font-bold outline-none focus:outline-none"
+                className={`text-2xl font-bold outline-none focus:outline-none  ${
+                  idx !== current ? 'cursor-pointer' : 'cursor-default'
+                }`}
                 onClick={() => idx !== current && setCurrent(idx)}
               >
                 {button}
@@ -56,7 +60,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
             width: `${tabs.length * 100}%`,
           }}
         >
-          {tabs.map((tab, _idx) => (
+          {tabs.map((tab) => (
             <Box
               key={tab}
               className="content-center w-full"
@@ -64,7 +68,20 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
                 align-content: flex-start;
               `}
             >
-              <div className="max-w-5xl" dangerouslySetInnerHTML={{ __html: tab }} />
+              <div
+                className="prose"
+                css={css`
+                  @media (min-width: 768px) {
+                    font-size: 1.125rem;
+                    line-height: 1.7777778;
+                  }
+                  @media (min-width: 1024px) {
+                    font-size: 1.25rem;
+                    line-height: 1.8;
+                  }
+                `}
+                dangerouslySetInnerHTML={{ __html: tab }}
+              />
             </Box>
           ))}
         </motion.div>
