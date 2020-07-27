@@ -70,7 +70,7 @@ export default function StoryPage({
                 </Box>
                 <Box className="place-center">
                   <div
-                    className="max-w-3xl prose"
+                    className="prose"
                     css={css`
                       @media (min-width: 768px) {
                         font-size: 1.125rem;
@@ -96,7 +96,7 @@ export default function StoryPage({
           image={song.video.thumbnail_url}
           alt={title}
           href={`/songs/[uid]`}
-          as={`/songs/${song.uid}`}
+          as={`/songs/${song._meta.uid}`}
           title={title}
           subtitle={description}
         />
