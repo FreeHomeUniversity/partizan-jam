@@ -2,7 +2,7 @@ import * as React from 'react'
 import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
-import { truncate } from 'lodash'
+import truncate from 'lodash/truncate'
 
 import { Box } from '../components/Box'
 import { Card } from '../components/Card'
@@ -75,6 +75,10 @@ export async function getStaticProps({ preview = false, previewData }) {
       id: node._meta.id,
       uid: node._meta.uid,
       title: RichText.asText(node.title),
+      thumbnail: {
+        url: node.image.url,
+        alt: node.image.alt || RichText.asText(node.title),
+      },
     })
   })
 
@@ -85,6 +89,10 @@ export async function getStaticProps({ preview = false, previewData }) {
       id: node._meta.id,
       uid: node._meta.uid,
       title: RichText.asText(node.title),
+      thumbnail: {
+        url: node.image.url,
+        alt: node.image.alt || RichText.asText(node.title),
+      },
     })
   })
 
@@ -108,7 +116,7 @@ export default function Home({
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box p={0}>
+      <>
         <Box>
           <h1>{title}</h1>
         </Box>
@@ -148,6 +156,8 @@ export default function Home({
           {musicians.map((musician) => (
             <Card
               key={musician.id}
+              image={musician.thumbnail.url}
+              alt={musician.thumbnail.alt}
               href={`/musicians/[uid]`}
               as={`/musicians/${musician.uid}`}
               title={musician.title}
@@ -157,10 +167,17 @@ export default function Home({
         <Card href="/artists" title="Artists" heading="h2" />
         <Box p={0} className="md:grid-cols-4">
           {artists.map((artist) => (
-            <Card key={artist.id} href={`/artists/[uid]`} as={`/artists/${artist.uid}`} title={artist.title} />
+            <Card
+              key={artist.id}
+              image={artist.thumbnail.url}
+              alt={artist.thumbnail.alt}
+              href={`/artists/[uid]`}
+              as={`/artists/${artist.uid}`}
+              title={artist.title}
+            />
           ))}
         </Box>
-      </Box>
+      </>
     </>
   )
 }

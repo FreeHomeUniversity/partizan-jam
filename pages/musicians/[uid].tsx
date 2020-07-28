@@ -5,24 +5,26 @@ import { InferGetStaticPropsType } from 'next'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
-import { getArtist, getAllArtists, getAllSongs } from '../../lib/api'
+import { getMusician, getAllMusicians, getAllSongs } from '../../lib/api'
 import { linkResolver, htmlSerializer } from '../../lib/prismic'
 import { Image } from '../../components/Image'
 
 export async function getStaticProps({ preview = false, previewData, params }) {
-  const artist = await getArtist(params.uid, previewData)
+  const musician = await getMusician(params.uid, previewData)
   const prismicSongs = await getAllSongs(previewData)
 
-  const title = RichText.asText(artist.title)
-  const description = RichText.asHtml(artist.description, linkResolver, htmlSerializer)
+  const songs = []
+
+  const title = RichText.asText(musician.title)
+  const description = RichText.asHtml(musician.description, linkResolver, htmlSerializer)
+
   const image = {
-    url: artist.image.url,
-    alt: artist.image.alt || RichText.asText(artist.title),
+    url: musician.image.url,
+    alt: musician.image.alt || RichText.asText(musician.title),
   }
 
-  const songs = []
   prismicSongs.forEach(({ node }) => {
-    if (node.artist?._meta?.uid === params.uid) {
+    if ((node.musicians || []).some((x) => x.musician?._meta?.uid === params.uid)) {
       songs.push({
         id: node._meta.id,
         uid: node._meta.uid,
@@ -42,22 +44,22 @@ export async function getStaticProps({ preview = false, previewData, params }) {
 }
 
 export async function getStaticPaths() {
-  const artists = await getAllArtists({})
+  const prismicMusicians = await getAllMusicians({})
 
-  if (artists.length === 0) return
+  if (prismicMusicians.length === 0) return
 
   return {
-    paths: artists.map(({ node }) => ({
+    paths: prismicMusicians.map(({ node }) => ({
       params: { uid: node._meta.uid },
     })),
     fallback: false,
   }
 }
 
-export default function ArtistPage({
+export default function StoryPage({
   title,
-  description,
   image,
+  description,
   songs,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (

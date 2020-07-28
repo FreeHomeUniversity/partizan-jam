@@ -81,10 +81,10 @@ export default function MyApp({ Component, pageProps }: AppProps): React.ReactNo
             </Link>
           </Box>
         </Box>
-        <Box p={0}>
+        <div className="grid place-stretch">
           <Component {...pageProps} />
           <Footer />
-        </Box>
+        </div>
         <Box p={0} className="hidden md:grid md:place-start">
           <Box className="sticky top-0 h-10 overflow-hidden md:h-screen-4 theme">
             <Link href="/" passHref>

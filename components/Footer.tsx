@@ -22,19 +22,17 @@ type FooterProps = {}
 
 const Footer: React.FC<FooterProps> = () => {
   return (
-    <Box p={0} className="items-end">
-      <footer>
-        <nav>
-          <ul className="grid grid-cols-3">
-            {LINKS.map((link) => (
-              <li key={link.href}>
-                <Card href={link.href} title={link.title} heading="h2" />
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </footer>
-    </Box>
+    <footer className="grid content-end">
+      <nav>
+        <ul className="grid grid-cols-3">
+          {LINKS.map((link) => (
+            <li key={link.href}>
+              <Card href={link.href} title={link.title} heading="h2" />
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </footer>
   )
 }
 

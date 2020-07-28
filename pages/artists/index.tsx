@@ -2,11 +2,12 @@ import * as React from 'react'
 import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
+import truncate from 'lodash/truncate'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
 import { getAllArtists } from '../../lib/api'
-import { linkResolver, htmlSerializer } from '../../lib/prismic'
+// import { linkResolver, htmlSerializer } from '../../lib/prismic'
 
 export async function getStaticProps({ preview = false, previewData }) {
   const prismicArtists = await getAllArtists(previewData)
@@ -20,7 +21,10 @@ export async function getStaticProps({ preview = false, previewData }) {
       id: node._meta.id,
       uid: node._meta.uid,
       title: RichText.asText(node.title),
-      description: RichText.asHtml(node.description, linkResolver, htmlSerializer),
+      description: truncate(RichText.asText(node.description), {
+        length: 240,
+        separator: /,? +/,
+      }),
       thumbnail: {
         url: node.image.url,
         alt: node.image.alt || RichText.asText(node.title),
@@ -40,7 +44,7 @@ export default function StoriesPage({ title, artists }: InferGetStaticPropsType<
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box p={0} className="place-start">
+      <div className="grid place-start">
         <Box>
           <h1>{title}</h1>
         </Box>
@@ -57,7 +61,7 @@ export default function StoriesPage({ title, artists }: InferGetStaticPropsType<
             />
           ))}
         </Box>
-      </Box>
+      </div>
     </>
   )
 }

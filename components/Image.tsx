@@ -5,6 +5,7 @@ export type ImageProps = {
   src: string
   alt?: string
   aspectRatio?: '1:1' | '16:9' | '4:3' | '3:2' | '8:5'
+  className?: string
 }
 
 const RATIOS = {
@@ -14,7 +15,7 @@ const RATIOS = {
   '3:2': '66.66%',
   '8.5': '62.5%',
 }
-export const Image: React.FC<ImageProps> = ({ src, alt = '', aspectRatio = '4:3' }) => {
+export const Image: React.FC<ImageProps> = ({ src, alt = '', aspectRatio = '4:3', className = '' }) => {
   const srcSet = []
 
   if (src.includes('prismic')) {
@@ -28,7 +29,7 @@ export const Image: React.FC<ImageProps> = ({ src, alt = '', aspectRatio = '4:3'
   }
 
   return (
-    <div className="relative overflow-hidden">
+    <div className={`relative overflow-hidden ${className}`}>
       <div
         className="w-full"
         css={css`

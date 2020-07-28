@@ -40,7 +40,7 @@ export default function SongsPage({ title, songs }: InferGetStaticPropsType<type
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box p={0} className="place-start">
+      <div className="grid place-start">
         <Box>
           <h1>{title}</h1>
         </Box>
@@ -56,7 +56,7 @@ export default function SongsPage({ title, songs }: InferGetStaticPropsType<type
             />
           ))}
         </Box>
-      </Box>
+      </div>
     </>
   )
 }

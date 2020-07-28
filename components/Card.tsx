@@ -22,8 +22,8 @@ export const Content: React.FC<Partial<Props>> = ({ image, alt, title, subtitle,
   const Heading = StyledHeading.withComponent(heading)
 
   return (
-    <Box className={`place-start w-full h-full space-y-4 ${className}`}>
-      {image && <Image src={image} alt={alt} />}
+    <Box className={`w-full h-full space-y-4 ${className}`}>
+      {image && <Image className="w-full" src={image} alt={alt} />}
       <Heading>{title}</Heading>
       {subtitle && <div dangerouslySetInnerHTML={{ __html: subtitle }} />}
     </Box>

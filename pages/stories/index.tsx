@@ -36,7 +36,7 @@ export default function StoriesPage({ title, songs }: InferGetStaticPropsType<ty
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box p={0} className="place-start">
+      <div className="grid place-start">
         <Box>
           <h1>{title}</h1>
         </Box>
@@ -51,7 +51,7 @@ export default function StoriesPage({ title, songs }: InferGetStaticPropsType<ty
             />
           ))}
         </Box>
-      </Box>
+      </div>
     </>
   )
 }

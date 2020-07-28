@@ -3,7 +3,7 @@ import { InferGetStaticPropsType } from 'next'
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { css } from '@emotion/react'
-import { truncate } from 'lodash'
+import truncate from 'lodash/truncate'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
@@ -131,7 +131,7 @@ export default function SongPage({
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Box p={0}>
+      <>
         <Box>
           <YouTube
             youTubeId={song.video.embed_url.replace('https://youtu.be/', '')}
@@ -192,7 +192,7 @@ export default function SongPage({
             </Box>
           </>
         )}
-      </Box>
+      </>
     </>
   )
 }

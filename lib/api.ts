@@ -70,6 +70,45 @@ export async function getAllSongs(previewData) {
               title
               description
               video
+              musicians {
+                ... on SongMusicians {
+                  musician {
+                    ... on Musician {
+                      title
+                      description
+                      image
+                      _meta {
+                        id
+                        uid
+                      }
+                    }
+                  }
+                }
+              }
+              artist {
+                ... on Artist {
+                  title
+                  description
+                  image
+                  body {
+                    ... on ArtistBodyArtwork {
+                      primary {
+                        artwork_title
+                        artwork_description
+                        artwork_image
+                      }
+                      fields {
+                        artwork_slider_image
+                        artwork_slider_description
+                      }
+                    }
+                  }
+                  _meta {
+                    id
+                    uid
+                  }
+                }
+              }
               _meta {
                 id
                 uid
@@ -235,32 +274,31 @@ export async function getAllArtists(previewData) {
 export async function getArtist(uid, previewData) {
   const data = await fetchAPI(
     /* GraphQL */ `
-    query ArtistQuery ($uid: String!, lang: String!) {
-      artist(uid: $uid, lang: $lang) {
-        title
-        description
-        image
-        body {
-          ...on ArtistBodyArtwork {
-            primary {
-              artwork_title
-              artwork_description
-              artwork_image
-            }
-            fields {
-              artwork_slider_image
-              artwork_slider_description
+      query ArtistQuery($uid: String!, $lang: String!) {
+        artist(uid: $uid, lang: $lang) {
+          title
+          description
+          image
+          body {
+            ... on ArtistBodyArtwork {
+              primary {
+                artwork_title
+                artwork_description
+                artwork_image
+              }
+              fields {
+                artwork_slider_image
+                artwork_slider_description
+              }
             }
           }
-        }
-        _meta {
-          id
-          uid
-  
+          _meta {
+            id
+            uid
+          }
         }
       }
-    }
-  `,
+    `,
     { previewData, variables: { uid, lang: API_LOCALE } },
   )
 

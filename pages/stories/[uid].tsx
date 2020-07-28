@@ -18,10 +18,12 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   const stories = []
 
   song.story.stories.forEach((story) => {
-    stories.push({
-      text: RichText.asHtml(story.text, linkResolver, htmlSerializer),
-      language: story.language,
-    })
+    if (story.text) {
+      stories.push({
+        text: RichText.asHtml(story.text, linkResolver, htmlSerializer),
+        language: story.language,
+      })
+    }
   })
 
   return {
