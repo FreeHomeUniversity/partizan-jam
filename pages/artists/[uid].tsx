@@ -8,6 +8,7 @@ import { Card } from '../../components/Card'
 import { getArtist, getAllArtists, getAllSongs } from '../../lib/api'
 import { linkResolver, htmlSerializer } from '../../lib/prismic'
 import { Image } from '../../components/Image'
+import Slides from '../../components/Slides'
 
 export async function getStaticProps({ preview = false, previewData, params }) {
   const artist = await getArtist(params.uid, previewData)
@@ -19,6 +20,21 @@ export async function getStaticProps({ preview = false, previewData, params }) {
     url: artist.image.url,
     alt: artist.image.alt || RichText.asText(artist.title),
   }
+  const artworks = artist.body.map(({ primary, fields }) => ({
+    title: RichText.asText(primary.artwork_title),
+    description: RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer),
+    thumbnail: {
+      url: primary.artwork_image.url,
+      alt: primary.artwork_image.alt || RichText.asText(primary.artwork_title),
+    },
+    slides: fields.map((slide) => ({
+      url: slide.artwork_slider_image.url,
+      alt: slide.artwork_slider_image.alt || '',
+      caption: slide.artwork_slider_description
+        ? RichText.asHtml(slide.artwork_slider_description, linkResolver, htmlSerializer)
+        : null,
+    })),
+  }))
 
   const songs = []
   prismicSongs.forEach(({ node }) => {
@@ -37,7 +53,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   })
 
   return {
-    props: { preview, title, description, image, songs },
+    props: { preview, title, description, image, artworks, songs },
   }
 }
 
@@ -58,6 +74,7 @@ export default function ArtistPage({
   title,
   description,
   image,
+  artworks,
   songs,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
@@ -76,6 +93,15 @@ export default function ArtistPage({
         <Box>
           <div dangerouslySetInnerHTML={{ __html: description }} />
         </Box>
+        {artworks[0] ? (
+          <Card
+            image={artworks[0].thumbnail.url}
+            alt={artworks[0].thumbnail.alt}
+            title={artworks[0].title}
+            subtitle={artworks[0].description}
+            slot={<Slides slides={artworks[0].slides} />}
+          />
+        ) : null}
         <Box>
           <h2>Songs</h2>
         </Box>

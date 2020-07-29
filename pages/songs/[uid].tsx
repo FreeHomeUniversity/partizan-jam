@@ -7,6 +7,7 @@ import truncate from 'lodash/truncate'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
+import { Slides } from '../../components/Slides'
 import { Tabs } from '../../components/Tabs'
 import { YouTube } from '../../components/YouTube'
 import { getSong, getAllSongs } from '../../lib/api'
@@ -71,31 +72,18 @@ export async function getStaticProps({ preview = false, previewData, params }) {
         url: song.artist.image.url,
         alt: song.artist.image.alt || RichText.asText(song.artist.title),
       },
-      // artworks: song.artist.body.reduce((res, { primary, fields }) => {
-      //   if (primary) {
-      //     res = {
-      //       ...res,
-      //       title: RichText.asText(primary.artwork_title),
-      //       description: RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer),
-      //       thumbnail: {
-      //         url: primary.artwork_image.url,
-      //         alt: primary.artwork_image.alt || RichText.asText(primary.artwork_title),
-      //       },
-      //     }
-      //   }
-      //   if (fields) {
-      //     res = {
-      //       ...res,
-      //       slides: fields.map((slide) => ({
-      //         url: slide.artwork_slider_image.url,
-      //         alt: slide.artwork_slider_image.alt || '',
-      //         caption: slide.artwork_slider_description
-      //           ? RichText.asHtml(slide.artwork_slider_description, linkResolver, htmlSerializer)
-      //           : null,
-      //       })),
-      //     }
-      //   }
-      // }, {}),
+      artworks: song.artist.body.map(({ primary, fields }) => ({
+        title: RichText.asText(primary.artwork_title),
+        description: RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer),
+        thumbnail: {
+          url: primary.artwork_image.url,
+          alt: primary.artwork_image.alt || RichText.asText(primary.artwork_title),
+        },
+        slides: fields.map((slide) => ({
+          url: slide.artwork_slider_image.url,
+          alt: slide.artwork_slider_image.alt || '',
+        })),
+      })),
     })
   }
 
@@ -157,7 +145,8 @@ export default function SongPage({
                   key={song.id}
                   image={song.thumbnail.url}
                   alt={song.thumbnail.alt}
-                  href={`/songs/${song.uid}`}
+                  href={`/songs/[uid]`}
+                  as={`/songs/${song.uid}`}
                   title={song.title}
                   subtitle={song.description}
                 />
@@ -170,7 +159,12 @@ export default function SongPage({
         </Box>
         <Box p={0} className="md:grid-cols-3">
           {musicians.map((musician) => (
-            <Card key={musician.id} href={`/musicians/${musician.uid}`} title={musician.title} />
+            <Card
+              key={musician.id}
+              href={`/musicians/[uid]`}
+              as={`/musicians/${musician.uid}`}
+              title={musician.title}
+            />
           ))}
         </Box>
         {artists.length > 0 && (
@@ -180,14 +174,28 @@ export default function SongPage({
             </Box>
             <Box p={0}>
               {artists.map((artist) => (
-                <Card
-                  key={artist.id}
-                  image={artist.thumbnail.url}
-                  alt={artist.thumbnail.alt}
-                  href={`/artists/${artist.uid}`}
-                  title={artist.title}
-                  subtitle={artist.description}
-                />
+                <React.Fragment key={artist.id}>
+                  <Card
+                    image={artist.thumbnail.url}
+                    alt={artist.thumbnail.alt}
+                    href={`/artists/[uid]`}
+                    as={`/artists/${artist.uid}`}
+                    title={artist.title}
+                    subtitle={artist.description}
+                    slot={
+                      artist.artworks[0] ? (
+                        <Card
+                          image={artist.artworks[0].thumbnail.url}
+                          alt={artist.artworks[0].thumbnail.alt}
+                          title={artist.artworks[0].title}
+                          subtitle={artist.artworks[0].description}
+                          slot={<Slides slides={artist.artworks[0].slides} />}
+                          isChild
+                        />
+                      ) : null
+                    }
+                  />
+                </React.Fragment>
               ))}
             </Box>
           </>

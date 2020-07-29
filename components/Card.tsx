@@ -2,7 +2,6 @@ import * as React from 'react'
 import Link from 'next/link'
 import styled from '@emotion/styled'
 
-import { Box } from './Box'
 import { Image } from './Image'
 
 export type Props = {
@@ -14,19 +13,35 @@ export type Props = {
   alt?: string
   subtitle?: string
   className?: string
+  slot?: React.ReactNode | null
+  isChild?: boolean
 }
 
 const StyledHeading = styled.div``
 
-export const Content: React.FC<Partial<Props>> = ({ image, alt, title, subtitle, heading = 'h3', className = '' }) => {
+export const Content: React.FC<Partial<Props>> = ({
+  image,
+  alt,
+  title,
+  subtitle,
+  slot,
+  isChild,
+  heading = 'h3',
+  className = '',
+}) => {
   const Heading = StyledHeading.withComponent(heading)
 
   return (
-    <Box className={`w-full h-full space-y-4 ${className}`}>
-      {image && <Image className="w-full" src={image} alt={alt} />}
-      <Heading>{title}</Heading>
-      {subtitle && <div dangerouslySetInnerHTML={{ __html: subtitle }} />}
-    </Box>
+    <div className={`w-full h-full ${isChild ? 'p-0' : 'theme-outline p-2 md:p-4'} ${className}`}>
+      <div className={`${slot ? `grid gap-2 md:gap-4 ${!isChild && 'md:grid-cols-2'}` : ''}`}>
+        <div className="space-y-4">
+          {image && <Image className="w-full" src={image} alt={alt} />}
+          <Heading>{title}</Heading>
+          {subtitle && <div dangerouslySetInnerHTML={{ __html: subtitle }} />}
+        </div>
+        <div>{slot ? slot : null}</div>
+      </div>
+    </div>
   )
 }
 
