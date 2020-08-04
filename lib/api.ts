@@ -49,6 +49,16 @@ export async function getHomepage(previewData) {
               title
               description
               image
+              playlist {
+                track {
+                  ... on _FileLink {
+                    name
+                    url
+                    size
+                  }
+                }
+                track_caption
+              }
             }
           }
         }

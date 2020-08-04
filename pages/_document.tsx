@@ -29,7 +29,6 @@ export default class MyDocument extends Document<Props> {
       <Html lang="en">
         <Head>
           <meta charSet="utf-8" />
-          <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=0, user-scalable=0" />
           <style data-emotion-css={this.props.ids.join(' ')} dangerouslySetInnerHTML={{ __html: this.props.css }} />
           <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         </Head>

@@ -16,6 +16,7 @@ import {
   getAllArtists,
 } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
+import Playlist from '../components/Playlist'
 
 export async function getStaticProps({ preview = false, previewData }) {
   const homepage = await getHomepage(previewData)
@@ -96,8 +97,13 @@ export async function getStaticProps({ preview = false, previewData }) {
     })
   })
 
+  const playlist = homepage.playlist.map(({ track, track_caption }) => ({
+    url: track.url,
+    caption: RichText.asText(track_caption),
+  }))
+
   return {
-    props: { preview, title, songs, kots, fhu, tepj, musicians, artists },
+    props: { preview, title, songs, kots, fhu, tepj, musicians, artists, playlist },
   }
 }
 
@@ -109,6 +115,7 @@ export default function Home({
   tepj,
   musicians,
   artists,
+  playlist,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -134,18 +141,6 @@ export default function Home({
               alt={song.thumbnail.alt}
               href={`/songs/[uid]`}
               as={`/songs/${song.uid}`}
-              title={song.title}
-              subtitle={song.description}
-            />
-          ))}
-        </Box>
-        <Card href="/stories" title="Stories" heading="h2" />
-        <Box p={0} className="md:grid-cols-2">
-          {songs.map((song) => (
-            <Card
-              key={song.id}
-              href={`/stories/[uid]`}
-              as={`/stories/${song.uid}`}
               title={song.title}
               subtitle={song.description}
             />
@@ -177,6 +172,7 @@ export default function Home({
             />
           ))}
         </Box>
+        <Playlist playlist={playlist} />
       </>
     </>
   )
