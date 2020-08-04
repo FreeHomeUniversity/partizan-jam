@@ -1,4 +1,5 @@
 import * as React from 'react'
+import Head from 'next/head'
 import { Howl } from 'howler'
 import { css } from '@emotion/react'
 
@@ -113,43 +114,48 @@ export const Playlist: React.FC = () => {
   }
 
   return (
-    <Box className="space-y-4">
-      <div className="flex flex-row items-center space-x-4">
-        <h2>Listen the Jam</h2>
-        <div
-          className={`text-sm w-24 theme text-center ${!duration ? 'opacity-50' : 'opacity-75'}`}
-          css={css`
-            font-variant-numeric: tabular-nums;
-          `}
-        >
-          {seek} / {duration}
+    <>
+      <Head>
+        {playlist.map((track) => (track?.url ? <link key={track.url} rel="prefetch" href={track.url} /> : null))}
+      </Head>
+      <Box className="space-y-4">
+        <div className="flex flex-row items-center space-x-4">
+          <h2>Listen the Jam</h2>
+          <div
+            className={`text-sm w-24 theme text-center ${!duration ? 'opacity-50' : 'opacity-75'}`}
+            css={css`
+              font-variant-numeric: tabular-nums;
+            `}
+          >
+            {seek} / {duration}
+          </div>
+          {playlist[currentTrack]?.url ? (
+            <>
+              <button
+                className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer theme focus:outline-none hover:opacity-100"
+                onClick={handlePlay}
+              >
+                {state === 'play' ? <Pause /> : <Play />}
+              </button>
+              <button
+                className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer theme focus:outline-none hover:opacity-100"
+                onClick={handleNext}
+              >
+                <Next />
+              </button>
+            </>
+          ) : null}
         </div>
-        {playlist[currentTrack]?.url ? (
-          <>
-            <button
-              className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer theme focus:outline-none hover:opacity-100"
-              onClick={handlePlay}
-            >
-              {state === 'play' ? <Pause /> : <Play />}
-            </button>
-            <button
-              className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer theme focus:outline-none hover:opacity-100"
-              onClick={handleNext}
-            >
-              <Next />
-            </button>
-          </>
-        ) : null}
-      </div>
-      {playlist[currentTrack]?.caption ? (
-        <div
-          className="text-base opacity-75 theme"
-          dangerouslySetInnerHTML={{ __html: playlist[currentTrack].caption }}
-        />
-      ) : (
-        <div className="text-base opacity-75 theme">...</div>
-      )}
-    </Box>
+        {playlist[currentTrack]?.caption ? (
+          <div
+            className="text-base opacity-75 theme"
+            dangerouslySetInnerHTML={{ __html: playlist[currentTrack].caption }}
+          />
+        ) : (
+          <div className="text-base opacity-75 theme">...</div>
+        )}
+      </Box>
+    </>
   )
 }
 
