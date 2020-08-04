@@ -21,18 +21,19 @@ type State = {
   fade: () => void
 }
 
+const [useTheme] = create<State>(
+  persist(
+    (set) => ({
+      black: false,
+      toggle: () => set((state) => ({ black: !state.black })),
+      outline: 127,
+      fade: () => set((state) => ({ outline: state.outline > 0 ? state.outline - 5 : 0 })),
+    }),
+    'theme',
+  ),
+)
+
 export default function MyApp({ Component, pageProps }: AppProps): React.ReactNode {
-  const [useTheme] = create<State>(
-    persist(
-      (set) => ({
-        black: false,
-        toggle: () => set((state) => ({ black: !state.black })),
-        outline: 127,
-        fade: () => set((state) => ({ outline: state.outline > 0 ? state.outline - 5 : 0 })),
-      }),
-      'theme',
-    ),
-  )
   const blackTheme = useTheme((state) => state.black)
   const toggleTheme = useTheme((state) => state.toggle)
   const outline = useTheme((state) => state.outline)

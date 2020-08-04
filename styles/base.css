@@ -21,6 +21,11 @@ body,
   color: var(--color);
   will-change: background-color, color;
 }
+.theme-inverted {
+  background-color: var(--color);
+  color: var(--backgound-color);
+  will-change: background-color, color;
+}
 
 [data-oembed] > iframe {
   width: 100% !important;

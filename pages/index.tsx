@@ -16,7 +16,6 @@ import {
   getAllArtists,
 } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
-import Playlist from '../components/Playlist'
 
 export async function getStaticProps({ preview = false, previewData }) {
   const homepage = await getHomepage(previewData)
@@ -97,13 +96,8 @@ export async function getStaticProps({ preview = false, previewData }) {
     })
   })
 
-  const playlist = homepage.playlist.map(({ track, track_caption }) => ({
-    url: track.url,
-    caption: RichText.asText(track_caption),
-  }))
-
   return {
-    props: { preview, title, songs, kots, fhu, tepj, musicians, artists, playlist },
+    props: { preview, title, songs, kots, fhu, tepj, musicians, artists },
   }
 }
 
@@ -115,7 +109,6 @@ export default function Home({
   tepj,
   musicians,
   artists,
-  playlist,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
@@ -171,8 +164,7 @@ export default function Home({
               title={artist.title}
             />
           ))}
-        </Box>
-        <Playlist playlist={playlist} />
+        </Box>{' '}
       </>
     </>
   )

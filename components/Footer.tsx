@@ -1,7 +1,8 @@
 import * as React from 'react'
+import dynamic from 'next/dynamic'
 
-import Box from './Box'
 import Card from './Card'
+const Playlist = dynamic(() => import('./Playlist'))
 
 const LINKS = [
   {
@@ -18,11 +19,10 @@ const LINKS = [
   },
 ]
 
-type FooterProps = {}
-
-const Footer: React.FC<FooterProps> = () => {
+const Footer: React.FC = () => {
   return (
     <footer className="grid content-end">
+      <Playlist />
       <nav>
         <ul className="grid grid-cols-3">
           {LINKS.map((link) => (
