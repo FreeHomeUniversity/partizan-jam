@@ -71,7 +71,7 @@ export default function StoryPage({
       </Head>
       <div className="grid place-start">
         <Box>
-          <Link href="/musicians">
+          <Link href="/musicians" passHref>
             <a className="backlink">← Musicians</a>
           </Link>
         </Box>

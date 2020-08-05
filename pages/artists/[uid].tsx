@@ -86,7 +86,7 @@ export default function ArtistPage({
       </Head>
       <div className="grid place-start">
         <Box>
-          <Link href="/artists">
+          <Link href="/artists" passHref>
             <a className="backlink">← Artists</a>
           </Link>
         </Box>

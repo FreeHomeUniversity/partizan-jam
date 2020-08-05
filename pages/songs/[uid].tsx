@@ -122,7 +122,7 @@ export default function SongPage({
       </Head>
       <Box p={0} className="place-start">
         <Box>
-          <Link href="/songs">
+          <Link href="/songs" passHref>
             <a className="backlink">← Songs</a>
           </Link>
         </Box>
