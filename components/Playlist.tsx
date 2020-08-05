@@ -2,7 +2,10 @@ import * as React from 'react'
 import Head from 'next/head'
 import { Howl } from 'howler'
 import { css } from '@emotion/react'
+import create from 'zustand'
+import shallow from 'zustand/shallow'
 
+import persist from '../lib/persist'
 import Box from './Box'
 import Play from './Play'
 import Pause from './Pause'
@@ -20,13 +23,53 @@ type Track = {
   caption: string | null
 }
 
+type State = {
+  playlist: Track[]
+  state: 'play' | 'pause'
+  currentTrack: number
+  seek: string
+  duration: string
+  setPlaylist: (arg: State['playlist']) => State
+  setState: (arg?: State['state']) => State
+  setCurrentTrack: () => State
+  setSeek: (arg: State['seek']) => State
+  setDuration: (arg: State['duration']) => State
+}
+const [usePlaylist] = create<State>(
+  persist(
+    (set) => ({
+      playlist: [],
+      state: 'pause',
+      currentTrack: 0,
+      seek: '--:--',
+      duration: '--:--',
+      setPlaylist: (playlist) => set(() => ({ playlist })),
+      setState: (state) => set((prev) => (state ? { state } : { state: prev.state === 'pause' ? 'play' : 'pause' })),
+      setCurrentTrack: () => set((prev) => ({ currentTrack: (prev.currentTrack + 1) % prev.playlist.length })),
+      setSeek: (seek) => set(() => ({ seek })),
+      setDuration: (duration) => set(() => ({ duration })),
+    }),
+    'playlist',
+  ),
+)
+
 export const Playlist: React.FC = () => {
-  const [playlist, setPlaylist] = React.useState<Track[]>([])
   const [sound, setSound] = React.useState<Howl | null>(null)
-  const [state, setState] = React.useState<'play' | 'pause'>('pause')
-  const [currentTrack, setCurrentTrack] = React.useState<number>(0)
-  const [seek, setSeek] = React.useState<string>('--:--')
-  const [duration, setDuration] = React.useState<string>('--:--')
+  const { playlist, state, currentTrack, seek, duration } = usePlaylist(
+    (s) => ({
+      playlist: s.playlist,
+      state: s.state,
+      currentTrack: s.currentTrack,
+      seek: s.seek,
+      duration: s.duration,
+    }),
+    shallow,
+  )
+  const setPlaylist = usePlaylist((state) => state.setPlaylist)
+  const setState = usePlaylist((state) => state.setState)
+  const setCurrentTrack = usePlaylist((state) => state.setCurrentTrack)
+  const setSeek = usePlaylist((state) => state.setSeek)
+  const setDuration = usePlaylist((state) => state.setDuration)
 
   const getPlaylist = async () => {
     const res = await fetch('/api/playlist').then((x) => x.json())
@@ -98,11 +141,11 @@ export const Playlist: React.FC = () => {
   }, [sound?.duration()])
 
   const handlePlay = () => {
-    setState((prev) => (prev === 'pause' ? 'play' : 'pause'))
+    setState()
   }
   const handleNext = () => {
     setState('pause')
-    setCurrentTrack((prev) => (prev + 1) % playlist.length)
+    setCurrentTrack()
   }
 
   if (playlist.length === 0) {
