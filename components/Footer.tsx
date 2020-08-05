@@ -45,6 +45,13 @@ const Footer: React.FC = () => {
           ))}
         </ul>
       </nav>
+      <Box>
+        <h2 className="text-center">
+          <a href="https://www.fhu.art/" target="_blank" rel="noreferrer">
+            FHU Site
+          </a>
+        </h2>
+      </Box>
       <Box p={2}>
         <a
           className="font-bold text-center uppercase text-xxs"

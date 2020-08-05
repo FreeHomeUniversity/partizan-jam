@@ -1,8 +1,8 @@
 import * as React from 'react'
 import { InferGetStaticPropsType } from 'next'
-import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import truncate from 'lodash/truncate'
+import { NextSeo } from 'next-seo'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
@@ -39,10 +39,7 @@ export async function getStaticProps({ preview = false, previewData }) {
 export default function StoriesPage({ title, musicians }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <NextSeo title={title} />
       <>
         <Box>
           <h1>{title}</h1>

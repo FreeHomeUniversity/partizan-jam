@@ -1,10 +1,10 @@
 import * as React from 'react'
 import { InferGetStaticPropsType } from 'next'
-import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { css } from '@emotion/react'
 import truncate from 'lodash/truncate'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
@@ -37,6 +37,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   })
 
   const title = RichText.asText(song.title)
+  const description = RichText.asHtml(song.description, linkResolver, htmlSerializer)
 
   const stories = []
 
@@ -89,7 +90,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   }
 
   return {
-    props: { preview, title, song, stories, songs, musicians, artists },
+    props: { preview, title, description, song, stories, songs, musicians, artists },
   }
 }
 
@@ -108,6 +109,7 @@ export async function getStaticPaths() {
 
 export default function SongPage({
   title,
+  description,
   song,
   stories,
   songs,
@@ -116,10 +118,7 @@ export default function SongPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <NextSeo title={title} description={description} />
       <Box p={0} className="place-start">
         <Box>
           <Link href="/songs" passHref>

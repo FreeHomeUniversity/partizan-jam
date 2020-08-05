@@ -1,7 +1,7 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { InferGetStaticPropsType } from 'next'
+import { NextSeo } from 'next-seo'
 
 import { getAboutFHU } from '../lib/api'
 import { linkResolver, htmlSerializer } from '../lib/prismic'
@@ -39,10 +39,7 @@ export default function About({ aboutFHU, title, body }: InferGetStaticPropsType
 
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <NextSeo title={title} />
       <Box>
         <h1 className="text-4xl font-bold">{title}</h1>
       </Box>

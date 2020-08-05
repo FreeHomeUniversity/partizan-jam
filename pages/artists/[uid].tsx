@@ -1,8 +1,8 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
+import { NextSeo } from 'next-seo'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
@@ -80,10 +80,7 @@ export default function ArtistPage({
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <NextSeo title={title} description={description} />
       <div className="grid place-start">
         <Box>
           <Link href="/artists" passHref>

@@ -1,7 +1,7 @@
 import * as React from 'react'
-import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { InferGetStaticPropsType } from 'next'
+import { NextSeo } from 'next-seo'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
@@ -36,10 +36,7 @@ export async function getStaticProps({ preview = false, previewData }) {
 export default function SongsPage({ title, songs }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <Head>
-        <title>{title}</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
+      <NextSeo title={title} />
       <div className="grid place-start">
         <Box>
           <h1>{title}</h1>

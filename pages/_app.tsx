@@ -4,11 +4,13 @@ import Head from 'next/head'
 import Link from 'next/link'
 import { css } from '@emotion/react'
 import create from 'zustand'
+import { DefaultSeo } from 'next-seo'
 
 import Box from '../components/Box'
 import Footer from '../components/Footer'
 import Logo from '../components/Logo'
 import persist from '../lib/persist'
+import SEO from '../next-seo.config'
 
 import '../styles/fonts.css'
 import '../styles/base.css'
@@ -66,9 +68,7 @@ export default function MyApp({ Component, pageProps }: AppProps): React.ReactNo
         );
       `}
     >
-      <Head>
-        <title>TransEuropean Partizan Jam</title>
-      </Head>
+      <DefaultSeo {...SEO} />
       <div
         className="grid"
         css={css`

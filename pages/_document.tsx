@@ -30,6 +30,7 @@ export default class MyDocument extends Document<Props> {
         <Head>
           <meta charSet="utf-8" />
           <style data-emotion-css={this.props.ids.join(' ')} dangerouslySetInnerHTML={{ __html: this.props.css }} />
+          <link rel="icon" href="/favicon.ico" />
         </Head>
         <body>
           <Main />
