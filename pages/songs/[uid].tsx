@@ -38,6 +38,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
 
   const title = RichText.asText(song.title)
   const description = RichText.asHtml(song.description, linkResolver, htmlSerializer)
+  const descriptionAsText = RichText.asText(song.description)
 
   const stories = []
 
@@ -90,7 +91,18 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   }
 
   return {
-    props: { preview, title, description, song, stories, songs, musicians, artists, uid: params.uid },
+    props: {
+      preview,
+      title,
+      description,
+      descriptionAsText,
+      song,
+      stories,
+      songs,
+      musicians,
+      artists,
+      uid: params.uid,
+    },
   }
 }
 
@@ -110,6 +122,7 @@ export async function getStaticPaths() {
 export default function SongPage({
   title,
   description,
+  descriptionAsText,
   song,
   stories,
   songs,
@@ -121,11 +134,11 @@ export default function SongPage({
     <>
       <NextSeo
         title={title}
-        description={description}
+        description={descriptionAsText}
         openGraph={{
           url: `https://partisan-jam.fhu.art/songs/${uid}`,
           title: title,
-          description: description,
+          description: descriptionAsText,
         }}
       />
       <Box p={0} className="place-start">
@@ -154,6 +167,9 @@ export default function SongPage({
               grid-area: a;
             `}
           >
+            <Box>
+              <div dangerouslySetInnerHTML={{ __html: description }} />
+            </Box>
             <Tabs title={title} buttons={stories.map((x) => x.language)} tabs={stories.map((x) => x.text)} />
           </div>
           <div

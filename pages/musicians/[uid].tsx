@@ -18,6 +18,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
 
   const title = RichText.asText(musician.title)
   const description = RichText.asHtml(musician.description, linkResolver, htmlSerializer)
+  const descriptionAsText = RichText.asText(musician.description)
 
   const image = {
     url: musician.image.url,
@@ -40,7 +41,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   })
 
   return {
-    props: { preview, title, description, image, songs, uid: params.uid },
+    props: { preview, title, description, descriptionAsText, image, songs, uid: params.uid },
   }
 }
 
@@ -61,6 +62,7 @@ export default function StoryPage({
   title,
   image,
   description,
+  descriptionAsText,
   songs,
   uid,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -68,11 +70,11 @@ export default function StoryPage({
     <>
       <NextSeo
         title={title}
-        description={description}
+        description={descriptionAsText}
         openGraph={{
           url: `https://partisan-jam.fhu.art/misicians/${uid}`,
           title: title,
-          description: description,
+          description: descriptionAsText,
         }}
       />
       <div className="grid place-start">
