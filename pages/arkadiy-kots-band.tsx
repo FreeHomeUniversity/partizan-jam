@@ -40,7 +40,13 @@ export default function About({ aboutKots, title, body }: InferGetStaticPropsTyp
 
   return (
     <>
-      <NextSeo title={title} />
+      <NextSeo
+        title={title}
+        openGraph={{
+          url: 'https://partisan-jam.fhu.art/arkadiy-kots-band',
+          title: title,
+        }}
+      />
       <Box>
         <h1 className="text-4xl font-bold">{title}</h1>
       </Box>

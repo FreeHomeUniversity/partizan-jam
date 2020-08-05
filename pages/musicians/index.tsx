@@ -39,7 +39,13 @@ export async function getStaticProps({ preview = false, previewData }) {
 export default function StoriesPage({ title, musicians }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <NextSeo title={title} />
+      <NextSeo
+        title={title}
+        openGraph={{
+          url: `https://partisan-jam.fhu.art/musicians`,
+          title: title,
+        }}
+      />
       <>
         <Box>
           <h1>{title}</h1>

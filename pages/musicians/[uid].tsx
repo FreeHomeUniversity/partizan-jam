@@ -40,7 +40,7 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   })
 
   return {
-    props: { preview, title, description, image, songs },
+    props: { preview, title, description, image, songs, uid: params.uid },
   }
 }
 
@@ -62,10 +62,19 @@ export default function StoryPage({
   image,
   description,
   songs,
+  uid,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <NextSeo title={title} description={description} />
+      <NextSeo
+        title={title}
+        description={description}
+        openGraph={{
+          url: `https://partisan-jam.fhu.art/misicians/${uid}`,
+          title: title,
+          description: description,
+        }}
+      />
       <div className="grid place-start">
         <Box>
           <Link href="/musicians" passHref>

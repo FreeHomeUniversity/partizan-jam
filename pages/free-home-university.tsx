@@ -39,7 +39,13 @@ export default function About({ aboutFHU, title, body }: InferGetStaticPropsType
 
   return (
     <>
-      <NextSeo title={title} />
+      <NextSeo
+        title={title}
+        openGraph={{
+          url: 'https://partisan-jam.fhu.art/free-home-university',
+          title: title,
+        }}
+      />
       <Box>
         <h1 className="text-4xl font-bold">{title}</h1>
       </Box>

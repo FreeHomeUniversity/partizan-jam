@@ -36,7 +36,13 @@ export async function getStaticProps({ preview = false, previewData }) {
 export default function SongsPage({ title, songs }: InferGetStaticPropsType<typeof getStaticProps>) {
   return (
     <>
-      <NextSeo title={title} />
+      <NextSeo
+        title={title}
+        openGraph={{
+          url: `https://partisan-jam.fhu.art/songs`,
+          title: title,
+        }}
+      />
       <div className="grid place-start">
         <Box>
           <h1>{title}</h1>
