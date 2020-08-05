@@ -107,8 +107,9 @@ export const Playlist: React.FC = () => {
 
   if (playlist.length === 0) {
     return (
-      <Box className="h-24 theme-inverted animate-pulse">
+      <Box className="space-y-4 theme-inverted animate-pulse">
         <h2>Listen the Jam</h2>
+        <div className="text-base">...</div>
       </Box>
     )
   }
@@ -116,7 +117,7 @@ export const Playlist: React.FC = () => {
   return (
     <>
       <Head>
-        {playlist.map((track) => (track?.url ? <link key={track.url} rel="prefetch" href={track.url} /> : null))}
+        {playlist.map((track) => (track?.url ? <link key={track.url} rel="preload" href={track.url} /> : null))}
       </Head>
       <Box className="space-y-4">
         <div className="flex flex-row items-center space-x-4">

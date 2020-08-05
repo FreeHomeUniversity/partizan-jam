@@ -4,6 +4,7 @@ import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { css } from '@emotion/react'
 import truncate from 'lodash/truncate'
+import Link from 'next/link'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
@@ -119,7 +120,12 @@ export default function SongPage({
         <title>{title}</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <>
+      <Box p={0} className="place-start">
+        <Box>
+          <Link href="/songs">
+            <a className="backlink">← Songs</a>
+          </Link>
+        </Box>
         <Box>
           <YouTube
             youTubeId={song.video.embed_url.replace('https://youtu.be/', '')}
@@ -127,17 +133,28 @@ export default function SongPage({
           />
         </Box>
         <div
-          className="grid grid-te"
+          className="grid w-full"
           css={css`
+            grid-template-areas: 'a' 'b' 'c';
             @media (min-width: 768px) {
-              grid-template-columns: 2fr 1fr;
+              grid-template-areas: 'a a c' 'b b b';
             }
           `}
         >
-          <Tabs title={title} buttons={stories.map((x) => x.language)} tabs={stories.map((x) => x.text)} />
-          <Box p={0} className="place-start">
+          <div
+            css={css`
+              grid-area: a;
+            `}
+          >
+            <Tabs title={title} buttons={stories.map((x) => x.language)} tabs={stories.map((x) => x.text)} />
+          </div>
+          <div
+            css={css`
+              grid-area: c;
+            `}
+          >
             <Box>
-              <h2>Songs</h2>
+              <h2>More Songs</h2>
             </Box>
             <Box p={0} className="lg:grid-cols-2">
               {songs.map((song) => (
@@ -152,55 +169,61 @@ export default function SongPage({
                 />
               ))}
             </Box>
-          </Box>
-        </div>
-        <Box>
-          <h2>Musicians</h2>
-        </Box>
-        <Box p={0} className="md:grid-cols-3">
-          {musicians.map((musician) => (
-            <Card
-              key={musician.id}
-              href={`/musicians/[uid]`}
-              as={`/musicians/${musician.uid}`}
-              title={musician.title}
-            />
-          ))}
-        </Box>
-        {artists.length > 0 && (
-          <>
+          </div>
+          <div
+            css={css`
+              grid-area: b;
+            `}
+          >
             <Box>
-              <h2>Artist</h2>
+              <h2>Musicians</h2>
             </Box>
-            <Box p={0}>
-              {artists.map((artist) => (
-                <React.Fragment key={artist.id}>
-                  <Card
-                    image={artist.thumbnail.url}
-                    alt={artist.thumbnail.alt}
-                    href={`/artists/[uid]`}
-                    as={`/artists/${artist.uid}`}
-                    title={artist.title}
-                    subtitle={artist.description}
-                    slot={
-                      artist.artworks[0] ? (
-                        <Card
-                          image={artist.artworks[0].thumbnail.url}
-                          alt={artist.artworks[0].thumbnail.alt}
-                          title={artist.artworks[0].title}
-                          subtitle={artist.artworks[0].description}
-                          slot={<Slides slides={artist.artworks[0].slides} />}
-                          isChild
-                        />
-                      ) : null
-                    }
-                  />
-                </React.Fragment>
+            <Box p={0} className="md:grid-cols-3">
+              {musicians.map((musician) => (
+                <Card
+                  key={musician.id}
+                  href={`/musicians/[uid]`}
+                  as={`/musicians/${musician.uid}`}
+                  title={musician.title}
+                />
               ))}
             </Box>
-          </>
-        )}
-      </>
+            {artists.length > 0 && (
+              <>
+                <Box>
+                  <h2>Artist</h2>
+                </Box>
+                <Box p={0}>
+                  {artists.map((artist) => (
+                    <React.Fragment key={artist.id}>
+                      <Card
+                        image={artist.thumbnail.url}
+                        alt={artist.thumbnail.alt}
+                        href={`/artists/[uid]`}
+                        as={`/artists/${artist.uid}`}
+                        title={artist.title}
+                        subtitle={artist.description}
+                        slot={
+                          artist.artworks[0] ? (
+                            <Card
+                              image={artist.artworks[0].thumbnail.url}
+                              alt={artist.artworks[0].thumbnail.alt}
+                              title={artist.artworks[0].title}
+                              subtitle={artist.artworks[0].description}
+                              slot={<Slides slides={artist.artworks[0].slides} />}
+                              isChild
+                            />
+                          ) : null
+                        }
+                      />
+                    </React.Fragment>
+                  ))}
+                </Box>
+              </>
+            )}
+          </div>
+        </div>
+      </Box>
     </>
   )
 }

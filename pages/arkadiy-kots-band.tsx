@@ -55,8 +55,8 @@ export default function About({ aboutKots, title, body }: InferGetStaticPropsTyp
           switch (slice_type) {
             case 'text':
               return (
-                <Box key={html}>
-                  <div dangerouslySetInnerHTML={{ __html: html }} />
+                <Box key={html} className="md:grid-cols-text">
+                  <div dangerouslySetInnerHTML={{ __html: html }} className="col-start-2 space-y-4 prose md:prose-lg" />
                 </Box>
               )
             case 'image':

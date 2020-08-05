@@ -16,7 +16,7 @@ html {
 html,
 body,
 .theme,
-.theme strong {
+.theme .prose * {
   @apply transition-colors duration-300 ease-in-out;
   background-color: var(--backgound-color);
   color: var(--color);
@@ -35,7 +35,8 @@ body,
 
 h1,
 h2,
-h3 {
+h3,
+.backlink {
   font-family: 'MFred', sans-serif;
   line-height: 0.91625em;
   padding: 0.05px 0;
@@ -43,7 +44,8 @@ h3 {
 
 h1::before,
 h2::before,
-h3::before {
+h3::before,
+.backlink::before {
   content: '';
   margin-top: 0.0241114583333333em;
   display: block;
@@ -52,7 +54,8 @@ h3::before {
 
 h1::after,
 h2::after,
-h3::after {
+h3::after,
+.backlink::after {
   content: '';
   margin-bottom: -0.20888854166666668em;
   display: block;
@@ -63,7 +66,8 @@ h1 {
   font-size: 3rem;
   @apply text-heading-1;
 }
-h2 {
+h2,
+.backlink {
   font-size: 1.875rem;
   @apply text-heading-2;
 }

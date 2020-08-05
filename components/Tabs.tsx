@@ -23,7 +23,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
   }))
 
   return (
-    <Box p={0} className="place-stretch">
+    <>
       <div className="flex flex-row">
         {title && (
           <Box className="px-8">
@@ -86,7 +86,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
           ))}
         </motion.div>
       </Box>
-    </Box>
+    </>
   )
 }
 

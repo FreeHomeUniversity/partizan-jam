@@ -2,6 +2,7 @@ import * as React from 'react'
 import Head from 'next/head'
 import { RichText } from 'prismic-dom'
 import { InferGetStaticPropsType } from 'next'
+import Link from 'next/link'
 
 import { Box } from '../../components/Box'
 import { Card } from '../../components/Card'
@@ -84,6 +85,11 @@ export default function ArtistPage({
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <div className="grid place-start">
+        <Box>
+          <Link href="/artists">
+            <a className="backlink">← Artists</a>
+          </Link>
+        </Box>
         <Box>
           <Image src={image.url} alt={image.alt} />
         </Box>

@@ -17,6 +17,18 @@ const LINKS = [
     href: '/transeuropean-partizan-jam',
     title: 'About Jam',
   },
+  {
+    href: '/songs',
+    title: 'Songs',
+  },
+  {
+    href: '/musicians',
+    title: 'Musicians',
+  },
+  {
+    href: '/artists',
+    title: 'Artists',
+  },
 ]
 
 const Footer: React.FC = () => {

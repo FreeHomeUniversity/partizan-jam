@@ -63,33 +63,39 @@ export default function About({ aboutTEPJ, title, body }: InferGetStaticPropsTyp
       <Box>
         <img src={image.url} alt={image.alt || ''} />
       </Box>
-      <Box className="grid-flow-row-dense grid-cols-3" p={0}>
+      <Box className="grid-cols-3" p={0}>
         {body.map(({ slice_type, items, html }) => {
           switch (slice_type) {
             case 'text':
               return (
-                <Box key={html} className="grid col-span-3 grid-cols-text">
-                  <div dangerouslySetInnerHTML={{ __html: html }} className="col-start-2 space-y-4 prose prose-lg" />
+                <Box key={html} className="grid w-full col-span-3 md:grid-cols-text">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: html }}
+                    className="space-y-4 prose md:col-start-2 md:prose-lg"
+                  />
                 </Box>
               )
             case 'Lead':
               return (
-                <Box key={html} className="grid col-span-3 grid-cols-text">
-                  <div dangerouslySetInnerHTML={{ __html: html }} className="col-start-2 space-y-4 prose prose-2xl" />
+                <Box key={html} className="grid w-full col-span-3 md:grid-cols-text">
+                  <div
+                    dangerouslySetInnerHTML={{ __html: html }}
+                    className="space-y-4 prose prose-lg md:col-start-2 md:prose-2xl"
+                  />
                 </Box>
               )
             case 'video':
               return (
-                <Box key={html}>
+                <Box key={html} className="col-span-3 md:col-span-1">
                   <YouTube youTubeId={html} />
                 </Box>
               )
             case 'image':
               return (
-                <Box key={items} className="grid grid-cols-3 col-span-3" p={0}>
+                <Box key={items} className="grid col-span-3 md:grid-cols-3" p={0}>
                   <>
                     {items.map(({ imagesrc, caption }) => (
-                      <Box key={imagesrc.url} className="col-start-2">
+                      <Box key={imagesrc.url} className="md:col-start-2">
                         <Image src={imagesrc.url} alt={caption?.[0]?.text || ''} />
                       </Box>
                     ))}
