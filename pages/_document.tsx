@@ -30,7 +30,6 @@ export default class MyDocument extends Document<Props> {
         <Head>
           <meta charSet="utf-8" />
           <style data-emotion-css={this.props.ids.join(' ')} dangerouslySetInnerHTML={{ __html: this.props.css }} />
-          <link rel="stylesheet" href="https://rsms.me/inter/inter.css" />
         </Head>
         <body>
           <Main />
