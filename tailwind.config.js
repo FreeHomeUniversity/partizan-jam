@@ -40,6 +40,7 @@ module.exports = {
         },
       },
       fontSize: {
+        xxs: '0.5rem',
         'heading-1': 'clamp(2rem, 2.5em, 3rem)',
         'heading-2': 'clamp(1.125rem, 1.5em, 1.875rem)',
         'heading-3': 'clamp(0.875rem, 1.125em, 1.5rem)',

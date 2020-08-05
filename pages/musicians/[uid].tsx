@@ -93,7 +93,8 @@ export default function StoryPage({
               key={song.id}
               image={song.thumbnail.url}
               alt={song.thumbnail.alt}
-              href={`/songs/${song.uid}`}
+              href={`/songs/[uid]`}
+              as={`/songs/${song.uid}`}
               title={song.title}
               subtitle={song.description}
             />

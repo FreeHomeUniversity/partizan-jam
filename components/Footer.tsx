@@ -1,6 +1,7 @@
 import * as React from 'react'
 import dynamic from 'next/dynamic'
 
+import Box from './Box'
 import Card from './Card'
 const Playlist = dynamic(() => import('./Playlist'))
 
@@ -44,6 +45,16 @@ const Footer: React.FC = () => {
           ))}
         </ul>
       </nav>
+      <Box p={2}>
+        <a
+          className="font-bold text-center uppercase text-xxs"
+          href="https://beta.accio.pro/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          made by accio
+        </a>
+      </Box>
     </footer>
   )
 }
