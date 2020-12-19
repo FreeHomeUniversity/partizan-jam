@@ -24,18 +24,26 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   }
   const artworks = (artist.body || []).map(({ primary, fields }) => ({
     title: primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
-    description: RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer),
-    thumbnail: {
-      url: primary.artwork_image.url,
-      alt: primary.artwork_image.alt || primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
-    },
-    slides: (fields || []).map((slide) => ({
-      url: slide.artwork_slider_image.url,
-      alt: slide.artwork_slider_image.alt || '',
-      caption: slide.artwork_slider_description
-        ? RichText.asHtml(slide.artwork_slider_description, linkResolver, htmlSerializer)
+    description: primary.artwork_description
+      ? RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer)
+      : null,
+    thumbnail: primary.artwork_image
+      ? {
+          url: primary.artwork_image.url,
+          alt: primary.artwork_image.alt || primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
+        }
+      : null,
+    slides: (fields || []).map((slide) =>
+      slide.artwork_slider_image
+        ? {
+            url: slide.artwork_slider_image.url,
+            alt: slide.artwork_slider_image.alt || '',
+            caption: slide.artwork_slider_description
+              ? RichText.asHtml(slide.artwork_slider_description, linkResolver, htmlSerializer)
+              : null,
+          }
         : null,
-    })),
+    ),
   }))
 
   const songs = []

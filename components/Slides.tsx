@@ -19,12 +19,14 @@ export const Slides: React.FC<SlidesProps> = ({ slides }) => {
 
   return (
     <div className="grid grid-cols-2 gap-2">
-      {slides.map((slide) => (
-        <div key={slide.url} className="space-y-2">
-          <Image src={slide.url} alt={slide.alt || ''} />
-          {slide.caption ? <div dangerouslySetInnerHTML={{ __html: slide.caption }} /> : null}
-        </div>
-      ))}
+      {slides.map((slide) =>
+        slide ? (
+          <div key={slide.url} className="space-y-2">
+            <Image src={slide.url} alt={slide.alt || ''} />
+            {slide.caption ? <div dangerouslySetInnerHTML={{ __html: slide.caption }} /> : null}
+          </div>
+        ) : null,
+      )}
     </div>
   )
 }
