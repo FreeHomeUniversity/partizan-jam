@@ -15,21 +15,21 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   const artist = await getArtist(params.uid, previewData)
   const prismicSongs = await getAllSongs(previewData)
 
-  const title = RichText.asText(artist.title)
+  const title = artist.title ? RichText.asText(artist.title) : null
   const description = RichText.asHtml(artist.description, linkResolver, htmlSerializer)
   const descriptionAsText = RichText.asText(artist.description)
   const image = {
     url: artist.image.url,
     alt: artist.image.alt || RichText.asText(artist.title),
   }
-  const artworks = artist.body.map(({ primary, fields }) => ({
-    title: RichText.asText(primary.artwork_title),
+  const artworks = (artist.body || []).map(({ primary, fields }) => ({
+    title: primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
     description: RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer),
     thumbnail: {
       url: primary.artwork_image.url,
-      alt: primary.artwork_image.alt || RichText.asText(primary.artwork_title),
+      alt: primary.artwork_image.alt || primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
     },
-    slides: fields.map((slide) => ({
+    slides: (fields || []).map((slide) => ({
       url: slide.artwork_slider_image.url,
       alt: slide.artwork_slider_image.alt || '',
       caption: slide.artwork_slider_description
@@ -44,11 +44,11 @@ export async function getStaticProps({ preview = false, previewData, params }) {
       songs.push({
         id: node._meta.id,
         uid: node._meta.uid,
-        title: RichText.asText(node.title),
-        description: RichText.asHtml(node.description, linkResolver, htmlSerializer),
+        title: node.title ? RichText.asText(node.title) : null,
+        description: node.description ? RichText.asHtml(node.description, linkResolver, htmlSerializer) : null,
         thumbnail: {
           url: node.video.thumbnail_url,
-          alt: node.video.title || RichText.asText(node.title),
+          alt: node.video.title || node.title ? RichText.asText(node.title) : null,
         },
       })
     }
