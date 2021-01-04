@@ -19,8 +19,8 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   const description = RichText.asHtml(artist.description, linkResolver, htmlSerializer)
   const descriptionAsText = RichText.asText(artist.description)
   const image = {
-    url: artist.image.url,
-    alt: artist.image.alt || RichText.asText(artist.title),
+    url: artist.image?.url || null,
+    alt: artist.image?.alt || RichText.asText(artist.title),
   }
   const artworks = (artist.body || []).map(({ primary, fields }) => ({
     title: primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
@@ -29,15 +29,15 @@ export async function getStaticProps({ preview = false, previewData, params }) {
       : null,
     thumbnail: primary.artwork_image
       ? {
-          url: primary.artwork_image.url,
-          alt: primary.artwork_image.alt || primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
+          url: primary.artwork_image?.url || null,
+          alt: primary.artwork_image?.alt || primary.artwork_title ? RichText.asText(primary.artwork_title) : null,
         }
       : null,
     slides: (fields || []).map((slide) =>
       slide.artwork_slider_image
         ? {
-            url: slide.artwork_slider_image.url,
-            alt: slide.artwork_slider_image.alt || '',
+            url: slide.artwork_slider_image?.url || null,
+            alt: slide.artwork_slider_image?.alt || '',
             caption: slide.artwork_slider_description
               ? RichText.asHtml(slide.artwork_slider_description, linkResolver, htmlSerializer)
               : null,

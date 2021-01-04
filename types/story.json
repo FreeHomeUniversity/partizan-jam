@@ -1,0 +1,54 @@
+{
+  "Main": {
+    "uid": {
+      "type": "UID",
+      "config": {
+        "label": "UID",
+        "placeholder": "Slug"
+      }
+    },
+    "title": {
+      "type": "StructuredText",
+      "config": {
+        "single": "heading1",
+        "label": "Title",
+        "placeholder": "Title"
+      }
+    },
+    "description": {
+      "type": "StructuredText",
+      "config": {
+        "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+        "allowTargetBlank": true,
+        "label": "Description",
+        "placeholder": "Description"
+      }
+    },
+    "stories": {
+      "type": "Group",
+      "config": {
+        "fields": {
+          "language": {
+            "type": "Select",
+            "config": {
+              "options": ["ENG", "RUS", "GRE", "ESP", "ITA", "CAT", "SRB", "YID", "POL", "FRA", "GER"],
+              "default_value": "ENG",
+              "label": "Language",
+              "placeholder": "Language"
+            }
+          },
+          "text": {
+            "type": "StructuredText",
+            "config": {
+              "multi": "paragraph, preformatted, heading1, heading2, heading3, heading4, heading5, heading6, strong, em, hyperlink, image, embed, list-item, o-list-item, o-list-item",
+              "allowTargetBlank": true,
+              "label": "Text",
+              "placeholder": "Text"
+            }
+          }
+        },
+        "label": "Stories"
+      }
+    }
+  }
+}

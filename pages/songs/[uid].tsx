@@ -56,8 +56,8 @@ export async function getStaticProps({ preview = false, previewData, params }) {
       title: RichText.asText(musician.title),
       description: RichText.asHtml(musician.description, linkResolver, htmlSerializer),
       thumbnail: {
-        url: musician.image.url,
-        alt: musician.image.alt || RichText.asText(musician.title),
+        url: musician.image?.url || null,
+        alt: musician.image?.alt || RichText.asText(musician.title),
       },
     })
   })
@@ -72,19 +72,19 @@ export async function getStaticProps({ preview = false, previewData, params }) {
         separator: /,? +/,
       }),
       thumbnail: {
-        url: song.artist.image.url,
-        alt: song.artist.image.alt || RichText.asText(song.artist.title),
+        url: song.artist.image?.url || null,
+        alt: song.artist.image?.alt || RichText.asText(song.artist.title),
       },
       artworks: song.artist.body.map(({ primary, fields }) => ({
         title: RichText.asText(primary.artwork_title),
         description: RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer),
         thumbnail: {
-          url: primary.artwork_image.url,
-          alt: primary.artwork_image.alt || RichText.asText(primary.artwork_title),
+          url: primary.artwork_image?.url || null,
+          alt: primary.artwork_image?.alt || RichText.asText(primary.artwork_title),
         },
         slides: fields.map((slide) => ({
-          url: slide.artwork_slider_image.url,
-          alt: slide.artwork_slider_image.alt || '',
+          url: slide.artwork_slider_image?.url || null,
+          alt: slide.artwork_slider_image?.alt || '',
         })),
       })),
     })

@@ -16,9 +16,11 @@ const RATIOS = {
   '8.5': '62.5%',
 }
 export const Image: React.FC<ImageProps> = ({ src, alt = '', aspectRatio = '4:3', className = '' }) => {
+  if (!src) return null
+
   const srcSet = []
 
-  if (src.includes('prismic')) {
+  if (src?.includes('prismic')) {
     const [w, h] = aspectRatio.split(':')
     const ratio = parseInt(h) / parseInt(w)
     srcSet.push(`${src}&amp;fit=max&amp;w=1920&amp;h=${1920 * ratio} 1920w`)

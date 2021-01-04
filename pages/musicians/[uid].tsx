@@ -21,8 +21,8 @@ export async function getStaticProps({ preview = false, previewData, params }) {
   const descriptionAsText = RichText.asText(musician.description)
 
   const image = {
-    url: musician.image.url,
-    alt: musician.image.alt || RichText.asText(musician.title),
+    url: musician.image?.url || null,
+    alt: musician.image?.alt || RichText.asText(musician.title),
   }
 
   prismicSongs.forEach(({ node }) => {

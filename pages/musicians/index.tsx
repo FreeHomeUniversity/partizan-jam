@@ -25,8 +25,8 @@ export async function getStaticProps({ preview = false, previewData }) {
         separator: /,? +/,
       }),
       thumbnail: {
-        url: node.image.url,
-        alt: node.image.alt || RichText.asText(node.title),
+        url: node.image?.url || null,
+        alt: node.image?.alt || RichText.asText(node.title),
       },
     })
   })
