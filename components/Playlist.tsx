@@ -151,7 +151,7 @@ export const Playlist: React.FC = () => {
   if (playlist.length === 0) {
     return (
       <Box className="space-y-4 theme-inverted animate-pulse">
-        <h2>Listen the Jam</h2>
+        <h2>Listen to the Jam</h2>
         <div className="text-base">...</div>
       </Box>
     )
