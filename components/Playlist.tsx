@@ -169,7 +169,7 @@ export const Playlist: React.FC = () => {
   if (playlist.length === 0) {
     return (
       <Box className="space-y-4 theme-inverted animate-pulse">
-        <h2>Listen to the Jam</h2>
+        <h2>RADIO PARTIZAN</h2>
         <div className="text-base">...</div>
       </Box>
     )
@@ -182,7 +182,7 @@ export const Playlist: React.FC = () => {
       </Head>
       <Box className="space-y-4">
         <div className="flex flex-row items-center space-x-4">
-          <h2>Listen the Jam</h2>
+          <h2>RADIO PARTIZAN</h2>
           <div
             className={`text-sm w-24 theme text-center ${!duration ? 'opacity-50' : 'opacity-75'}`}
             css={css`
