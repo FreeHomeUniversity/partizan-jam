@@ -23,7 +23,7 @@ type State = {
   fade: () => void
 }
 
-const [useTheme] = create<State>(
+const useTheme = create<State>(
   persist(
     (set) => ({
       black: false,

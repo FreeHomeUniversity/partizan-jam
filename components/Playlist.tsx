@@ -10,6 +10,7 @@ import Box from './Box'
 import Play from './Play'
 import Pause from './Pause'
 import Next from './Next'
+import { shuffleArray } from '../lib/getShuffled'
 
 const secondsToMinutes = (s: number): string => {
   const min = Math.floor(s / 60)
@@ -35,7 +36,7 @@ type State = {
   setSeek: (arg: State['seek']) => State
   setDuration: (arg: State['duration']) => State
 }
-const [usePlaylist] = create<State>(
+const usePlaylist = create<State>(
   persist(
     (set) => ({
       playlist: [],
@@ -74,11 +75,17 @@ export const Playlist: React.FC = () => {
   const getPlaylist = async () => {
     const res = await fetch('/api/playlist').then((x) => x.json())
     if (res.playlist) {
-      setPlaylist(res.playlist)
+      setPlaylist(shuffleArray(res.playlist))
     }
   }
   React.useEffect(() => {
-    getPlaylist()
+    const restoredPlaylist = typeof window === 'undefined' ? null : JSON.parse(sessionStorage.getItem('playlist'))
+
+    if (!restoredPlaylist) {
+      getPlaylist()
+    } else {
+      setPlaylist(restoredPlaylist.playlist)
+    }
   }, [])
 
   React.useEffect(() => {
@@ -87,10 +94,17 @@ export const Playlist: React.FC = () => {
       setSound(
         new Howl({
           src: [playlist[currentTrack].url],
-          loop: false,
+          loop: true,
           autoplay: false,
           preload: true,
           html5: true,
+          onend: function () {
+            setSeek('--:--')
+            setDuration('--:--')
+            setState('pause')
+            setCurrentTrack()
+            setTimeout(() => setState('play'))
+          },
         }),
       )
     }
@@ -136,7 +150,7 @@ export const Playlist: React.FC = () => {
 
   React.useEffect(() => {
     if (sound?.duration()) {
-      setDuration(secondsToMinutes(sound?.duration()))
+      setDuration(secondsToMinutes(sound.duration()))
     }
   }, [sound?.duration()])
 
@@ -144,8 +158,12 @@ export const Playlist: React.FC = () => {
     setState()
   }
   const handleNext = () => {
+    const prevState = state
+    setSeek('--:--')
+    setDuration('--:--')
     setState('pause')
     setCurrentTrack()
+    if (prevState === 'play') setTimeout(() => setState('play'))
   }
 
   if (playlist.length === 0) {
