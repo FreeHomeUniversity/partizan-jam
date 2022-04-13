@@ -1,7 +1,6 @@
-import * as React from 'react'
-import { motion, useAnimation } from 'framer-motion'
 import { css } from '@emotion/react'
-
+import { AnimatePresence, motion } from 'framer-motion'
+import * as React from 'react'
 import { Box } from './Box'
 
 type TabsProps = {
@@ -10,17 +9,9 @@ type TabsProps = {
   title?: string
 }
 export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
-  const [current, setCurrent] = React.useState<number>(0)
-  const controls = useAnimation()
+  const [[current, direction], setCurrent] = React.useState<[number, number]>([0, 0])
 
   if (tabs.length === 0) return null
-
-  controls.start((i) => ({
-    x: `-${(current * 100) / tabs.length}%`,
-    transition: {
-      x: { type: 'spring', stiffness: 300, damping: 200 },
-    },
-  }))
 
   return (
     <>
@@ -44,7 +35,7 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
                 className={`text-2xl font-bold outline-none focus:outline-none  ${
                   idx !== current ? 'cursor-pointer' : 'cursor-default'
                 }`}
-                onClick={() => idx !== current && setCurrent(idx)}
+                onClick={() => idx !== current && setCurrent((prev) => [idx, prev[0] > idx ? 1 : -1])}
               >
                 {button}
               </button>
@@ -53,41 +44,78 @@ export const Tabs: React.FC<TabsProps> = ({ tabs, buttons, title }) => {
         </div>
       </div>
       <Box p={0} className="relative w-full overflow-hidden">
-        <motion.div
-          className="flex flex-row flex-no-wrap"
-          animate={controls}
-          style={{
-            width: `${tabs.length * 100}%`,
-          }}
-        >
-          {tabs.map((tab) => (
-            <Box
-              key={tab}
-              className="content-center w-full"
-              css={css`
-                align-content: flex-start;
-              `}
-            >
-              <div
-                className="prose"
-                css={css`
-                  @media (min-width: 768px) {
-                    font-size: 1.125rem;
-                    line-height: 1.7777778;
-                  }
-                  @media (min-width: 1024px) {
-                    font-size: 1.25rem;
-                    line-height: 1.8;
-                  }
-                `}
-                dangerouslySetInnerHTML={{ __html: tab }}
-              />
-            </Box>
-          ))}
-        </motion.div>
+        <div className="flex flex-row flex-no-wrap w-[200%] overflow-hidden">
+          <Tab tab={tabs[current]} current={current} direction={direction} />
+        </div>
       </Box>
     </>
   )
 }
 
 export default Tabs
+
+const Tab = React.memo(function Tab({ tab, current, direction }: { tab: string; current: number; direction: number }) {
+  const variants = {
+    enter: (direction: number) => {
+      return {
+        x: direction > 0 ? '-200%' : '0%',
+      }
+    },
+    center: (direction: number) => {
+      return {
+        x: direction > 0 ? '-100%' : '-100%',
+        transitionEnd: {
+          x: '0%',
+        },
+      }
+    },
+    exit: (direction: number) => {
+      return {
+        x: direction < 0 ? '-100%' : '100%',
+      }
+    },
+  }
+
+  const [transition] = React.useState(() => ({
+    x: { duration: 1.2, type: 'tween' },
+  }))
+
+  return (
+    <AnimatePresence initial={false} custom={direction}>
+      {tab ? (
+        <motion.div
+          key={current}
+          className="w-1/2"
+          custom={direction}
+          variants={variants}
+          initial="enter"
+          animate="center"
+          exit="exit"
+          transition={transition}
+        >
+          <Box
+            className="content-center w-full"
+            css={css`
+              align-content: flex-start;
+            `}
+          >
+            <div
+              className="prose"
+              css={css`
+                @media (min-width: 768px) {
+                  font-size: 1.125rem;
+                  line-height: 1.7777778;
+                }
+                @media (min-width: 1024px) {
+                  font-size: 1.25rem;
+                  line-height: 1.8;
+                }
+              `}
+              dangerouslySetInnerHTML={{ __html: tab }}
+            />
+          </Box>
+        </motion.div>
+      ) : null}
+    </AnimatePresence>
+  )
+})
