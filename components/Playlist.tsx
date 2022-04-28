@@ -280,11 +280,11 @@ export const Playlist: React.FC = () => {
           <div className="text-base opacity-75">...</div>
         )}
         {openPlaylist && (
-          <Box className="absolute left-0 z-50 max-w-2xl max-h-[75vh] overflow-y-auto gap-2 top-full theme-inverted">
+          <Box className="absolute left-0 right-0 z-50 md:max-w-xl max-h-[75vh] overflow-y-auto gap-2 top-full theme-inverted">
             {playlist.map((item, idx) => (
               <div
                 key={item.url}
-                className="flex items-center max-w-[36rem] gap-2"
+                className="flex items-center max-w-[calc(100vw-3rem)] md:max-w-[34rem] gap-2"
               >
                 <button
                   className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer focus:outline-none hover:opacity-100"

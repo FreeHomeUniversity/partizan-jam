@@ -29,6 +29,7 @@ specifiers:
   next-fonts: ^1.5.1
   next-seo: ^5.4.0
   postcss: ^8.4.12
+  postcss-100vh-fix: ^1.0.2
   postcss-preset-env: ^7.4.4
   prettier: ^2.6.2
   prismic-dom: ^2.2.7
@@ -77,6 +78,7 @@ devDependencies:
   next-compose-plugins: 2.2.1
   next-fonts: 1.5.1
   postcss: 8.4.12
+  postcss-100vh-fix: 1.0.2_postcss@8.4.12
   postcss-preset-env: 7.4.4_postcss@8.4.12
   prettier: 2.6.2
   tailwindcss: 3.0.24
@@ -2507,6 +2509,15 @@ packages:
       style-value-types: 5.0.0
       tslib: 2.4.0
     dev: false
+
+  /postcss-100vh-fix/1.0.2_postcss@8.4.12:
+    resolution: {integrity: sha512-t7vqk9AfjI4fXmWlQCEiMZFFhi1hro4WlECINI1TV6Qh1XapUJE++gCmNr95F5Hen/+bz1OmO+SiSB9TZmFmSg==}
+    engines: {node: '>=10.0'}
+    peerDependencies:
+      postcss: ^8.1.0
+    dependencies:
+      postcss: 8.4.12
+    dev: true
 
   /postcss-attribute-case-insensitive/5.0.0_postcss@8.4.12:
     resolution: {integrity: sha512-b4g9eagFGq9T5SWX4+USfVyjIb3liPnjhHHRMP7FMB2kFVpYyfEscV0wP3eaXhKlcHKUut8lt5BGoeylWA/dBQ==}
