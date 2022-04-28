@@ -7,7 +7,10 @@ const PATHS = {
   musiciant: 'musiciants',
 } as const
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(
+  req: NextApiRequest,
+  res: NextApiResponse,
+) {
   const body = req.body as PrismicWebhook
 
   // Check for secret to confirm this is a valid request
@@ -17,7 +20,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const toRevalidate = ['/']
   const allDocuments = await getAllByID(body.documents || [])
-  allDocuments.array.forEach(({ node }) => {
+  allDocuments?.forEach(({ node }) => {
     if (node?._meta?.uid && PATHS[node._meta.type]) {
       toRevalidate.push(`/${PATHS[node._meta.type]}`)
       toRevalidate.push(`/${PATHS[node._meta.type]}/${node._meta.uid}`)
