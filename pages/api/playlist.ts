@@ -1,16 +1,9 @@
-import { RichText } from 'prismic-dom'
+import { getPlaylist } from '../../lib/api'
 
-import { getHomepage } from '../../lib/api'
-
-export default async (req, res) => {
-  const homepage = await getHomepage(false)
-
-  const playlist = homepage.playlist.map(({ track, track_caption }) => ({
-    url: track.url,
-    caption: RichText.asText(track_caption),
-  }))
+export default async (_req, res) => {
+  const playlist = await getPlaylist()
   res.statusCode = 200
   res.setHeader('Content-Type', 'application/json')
-  res.setHeader('Cache-Control', 's-maxage=60, stale-while-revalidate')
+  res.setHeader('Cache-Control', 's-maxage=3600, stale-while-revalidate=300')
   res.end(JSON.stringify({ playlist }))
 }
