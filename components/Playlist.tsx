@@ -223,21 +223,10 @@ export const Playlist: React.FC = () => {
       </Head>
       <Box
         ref={ref}
-        className="sticky isolate top-0 z-50 gap-4 items-center md:grid-cols-[min-content,1fr] theme-inverted"
+        className="sticky isolate top-0 z-50 gap-4 items-center md:max-w-[calc(100vw-9.5rem)] md:grid-cols-[min-content,auto] theme-inverted py-2 md:py-2"
       >
-        <div className="flex flex-row items-center space-x-4">
+        <div className="flex flex-row items-center justify-between gap-4">
           <h2 className="whitespace-nowrap">RADIO PARTIZAN</h2>
-          <div
-            className={`text-sm w-24 text-center ${
-              !sound?.duration() ? 'opacity-50' : 'opacity-75'
-            }`}
-            css={css`
-              font-variant-numeric: tabular-nums;
-            `}
-          >
-            {seek} /{' '}
-            {sound?.duration() ? secondsToMinutes(sound?.duration()) : '--:--'}
-          </div>
           {playlist[currentTrack]?.url ? (
             <>
               <button
@@ -248,11 +237,15 @@ export const Playlist: React.FC = () => {
                 <Next className="rotate-180" />
               </button>
               <button
-                className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer focus:outline-none hover:opacity-100"
+                className="inline-grid transition-colors duration-300 ease-in-out rounded-full cursor-pointer w-14 h-14 place-items-center theme hover:bg-theme-red-500 hover:text-white outline"
                 onClick={handlePlay}
                 disabled={!sound}
               >
-                {state === 'play' ? <Pause /> : <Play />}
+                {state === 'play' ? (
+                  <Pause height="2em" width="2em" />
+                ) : (
+                  <Play height="2em" width="2em" className="ml-1" />
+                )}
               </button>
               <button
                 className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer focus:outline-none hover:opacity-100"
@@ -272,10 +265,27 @@ export const Playlist: React.FC = () => {
           ) : null}
         </div>
         {playlist[currentTrack]?.caption ? (
-          <div
-            className="w-full text-base truncate opacity-75"
-            dangerouslySetInnerHTML={{ __html: playlist[currentTrack].caption }}
-          />
+          <div className="flex items-center justify-between max-w-[calc(100vw-4.5rem)] md:w-[calc(100vw-29.7rem)] gap-4">
+            <div
+              className="w-full text-base truncate opacity-75"
+              dangerouslySetInnerHTML={{
+                __html: playlist[currentTrack].caption,
+              }}
+            />
+            <div
+              className={`text-sm flex-shrink-0 w-24 text-center ${
+                !sound?.duration() ? 'opacity-50' : 'opacity-75'
+              }`}
+              css={css`
+                font-variant-numeric: tabular-nums;
+              `}
+            >
+              {seek} /{' '}
+              {sound?.duration()
+                ? secondsToMinutes(sound?.duration())
+                : '--:--'}
+            </div>
+          </div>
         ) : (
           <div className="text-base opacity-75">...</div>
         )}
