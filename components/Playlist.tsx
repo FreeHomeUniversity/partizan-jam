@@ -221,9 +221,9 @@ export const Playlist: React.FC = () => {
           ) : null,
         )}
       </Head>
-      <Box
+      <div
         ref={ref}
-        className="sticky isolate top-0 z-50 gap-4 items-center md:max-w-[calc(100vw-9.5rem)] md:grid-cols-[min-content,auto] theme-inverted py-2 md:py-2"
+        className="sticky top-0 z-50 flex flex-col items-center gap-4 p-2 md:px-4 theme theme-outline isolate md:flex-row md:flex-nowrap theme-inverted md:py-2"
       >
         <div className="flex flex-row items-center justify-between gap-4">
           <h2 className="whitespace-nowrap">RADIO PARTIZAN</h2>
@@ -290,42 +290,48 @@ export const Playlist: React.FC = () => {
           <div className="text-base opacity-75">...</div>
         )}
         {openPlaylist && (
-          <Box className="absolute left-0 right-0 z-50 md:max-w-xl max-h-[75vh] overflow-y-auto gap-2 top-full theme-inverted">
-            {playlist.map((item, idx) => (
-              <div
-                key={item.url}
-                className="flex items-center max-w-[calc(100vw-3rem)] md:max-w-[34rem] gap-2"
-              >
-                <button
-                  className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer focus:outline-none hover:opacity-100"
-                  onClick={() =>
-                    state === 'play' && currentTrack === idx
-                      ? sound?.pause()
-                      : currentTrack === idx
-                      ? sound?.play()
-                      : handleCurrent(idx)
-                  }
-                  disabled={!sound}
-                >
-                  {state === 'play' && currentTrack === idx ? (
-                    <Pause />
-                  ) : (
-                    <Play />
-                  )}
-                </button>
+          <>
+            <div
+              className="absolute left-0 right-0 h-screen opacity-75 top-full theme"
+              onClick={() => setOpenPlaylist(false)}
+            />
+            <Box className="absolute left-0 right-0 z-50 md:max-w-xl max-h-[75vh] overflow-y-auto gap-2 top-full theme-inverted">
+              {playlist.map((item, idx) => (
                 <div
-                  className="flex-1 truncate"
-                  css={css`
-                    font-weight: ${currentTrack === idx ? 'bold' : 'normal'};
-                  `}
+                  key={item.url}
+                  className="flex items-center max-w-[calc(100vw-3rem)] md:max-w-[34rem] gap-2"
                 >
-                  {item.caption}
+                  <button
+                    className="inline-block transition-colors duration-300 ease-in-out opacity-75 cursor-pointer focus:outline-none hover:opacity-100"
+                    onClick={() =>
+                      state === 'play' && currentTrack === idx
+                        ? sound?.pause()
+                        : currentTrack === idx
+                        ? sound?.play()
+                        : handleCurrent(idx)
+                    }
+                    disabled={!sound}
+                  >
+                    {state === 'play' && currentTrack === idx ? (
+                      <Pause />
+                    ) : (
+                      <Play />
+                    )}
+                  </button>
+                  <div
+                    className="flex-1 truncate"
+                    css={css`
+                      font-weight: ${currentTrack === idx ? 'bold' : 'normal'};
+                    `}
+                  >
+                    {item.caption}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </Box>
+              ))}
+            </Box>
+          </>
         )}
-      </Box>
+      </div>
     </>
   )
 }
