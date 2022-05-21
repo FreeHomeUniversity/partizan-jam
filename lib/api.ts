@@ -1,4 +1,6 @@
+import { RichText } from 'prismic-dom'
 import Prismic from 'prismic-javascript'
+import { getCached, getWithCacheByUID } from './getWithCache'
 
 const REPOSITORY = process.env.PRISMIC_REPOSITORY_NAME
 const FHU_API_URL = `https://${process.env.FHU_REPOSITORY_NAME}.prismic.io/api/v2`
@@ -315,6 +317,29 @@ export async function getArtist(uid, previewData) {
   return data.artist
 }
 
+export async function getAllByID(IDs: string[], previewData?: any) {
+  const data = await fetchAPI(
+    /* GraphQL */ `
+      query getAll($IDs: [String!]) {
+        _allDocuments(id_in: $IDs) {
+          edges {
+            node {
+              _meta {
+                id
+                uid
+                type
+              }
+            }
+          }
+        }
+      }
+    `,
+    { previewData, variables: { IDs, lang: API_LOCALE } },
+  )
+
+  return data._allDocuments.edges || []
+}
+
 export const FHUClient = Prismic.client(FHU_API_URL, {
   accessToken: FHU_API_TOKEN,
 })
@@ -338,4 +363,14 @@ export async function getAboutKots() {
   const { results } = await api.query(Prismic.Predicates.at('my.text.uid', 'arkadiy-kots-band'))
 
   return results[0]
+}
+
+export const getCachedHomepage = getCached(getHomepage, 'index', 'homepage')
+
+export async function getPlaylist() {
+  const homepage = await getCachedHomepage()
+  return homepage.playlist.map(({ track, track_caption }) => ({
+    url: track.url,
+    caption: RichText.asText(track_caption),
+  }))
 }

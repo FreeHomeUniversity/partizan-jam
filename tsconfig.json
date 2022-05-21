@@ -20,7 +20,7 @@
     "incremental": true,
     "baseUrl": ".",
     "types": [
-      "@emotion/react/types/css-prop"
+      "@emotion/react"
     ]
   },
   "exclude": [

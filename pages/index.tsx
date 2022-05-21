@@ -97,7 +97,7 @@ export async function getStaticProps({ preview = false, previewData }) {
   })
 
   return {
-    props: { preview, title, songs, kots, fhu, tepj, musicians, artists },
+    props: { preview, title, songs, kots, fhu, tepj, musicians, artists, homepage },
   }
 }
 

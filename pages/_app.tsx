@@ -14,6 +14,9 @@ import SEO from '../next-seo.config'
 
 import '../styles/fonts.css'
 import '../styles/base.css'
+import dynamic from 'next/dynamic'
+
+const Playlist = dynamic(() => import('../components/Playlist'))
 
 type State = {
   black: boolean
@@ -55,7 +58,7 @@ export default function MyApp({ Component, pageProps }: AppProps): React.ReactNo
 
   return (
     <div
-      className="p-2 md:p-4 theme"
+      className="px-2 md:p-4 theme"
       css={css`
         min-height: -webkit-fill-available;
         min-height: 100vh;
@@ -88,6 +91,7 @@ export default function MyApp({ Component, pageProps }: AppProps): React.ReactNo
           </Box>
         </Box>
         <div className="grid place-stretch">
+          <Playlist />
           <Component {...pageProps} />
           <Footer />
         </div>

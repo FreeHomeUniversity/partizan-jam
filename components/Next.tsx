@@ -3,11 +3,12 @@ import * as React from 'react'
 type Props = {
   width?: React.CSSProperties['width']
   height?: React.CSSProperties['height']
+  className?: string
 }
 
-const Next: React.FC<Props> = ({ width = '1em', height = '1em' }) => {
+const Next: React.FC<Props> = ({ width = '1em', height = '1em', className }) => {
   return (
-    <svg width={width} height={height} viewBox="0 0 50 50" fill="none">
+    <svg width={width} height={height} className={className} viewBox="0 0 50 50" fill="none">
       <path d="M8.54077 45.2597V5.2597L38.5408 25.2597L8.54077 45.2597Z" fill="currentColor" />
       <path
         fillRule="evenodd"
