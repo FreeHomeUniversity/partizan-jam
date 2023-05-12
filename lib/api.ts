@@ -19,11 +19,11 @@ export const PrismicClient = Prismic.client(REF_API_URL, {
 async function fetchAPI(query, { previewData, variables }: any = {}) {
   const prismicAPI = await PrismicClient.getApi()
 
-  const res = await fetch(`${GRAPHQL_API_URL}?query=${query}&variables=${JSON.stringify(variables)}`, {
+  const res = await fetch(`${GRAPHQL_API_URL}?query=${encodeURIComponent(query)}&variables=${encodeURIComponent(JSON.stringify(variables || {}))}`, {
     headers: {
       'Prismic-Ref': previewData?.ref || prismicAPI.masterRef.ref,
       'Content-Type': 'application/json',
-      'Accept-Language': API_LOCALE,
+      // 'Accept-Language': API_LOCALE,
       Authorization: `Token ${API_TOKEN}`,
     },
   })
@@ -371,6 +371,6 @@ export async function getPlaylist() {
   const homepage = await getCachedHomepage()
   return homepage.playlist.map(({ track, track_caption }) => ({
     url: track.url,
-    caption: RichText.asText(track_caption),
+    caption: RichText.asText(track_caption || []),
   }))
 }

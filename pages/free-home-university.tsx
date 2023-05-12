@@ -10,7 +10,7 @@ import { Box } from '../components/Box'
 export async function getStaticProps() {
   const aboutFHU = await getAboutFHU()
 
-  const title = RichText.asText(aboutFHU.data.title)
+  const title = RichText.asText(aboutFHU.data.title || [])
   const body = []
 
   aboutFHU.data.body.forEach(({ slice_type, items, primary }) => {
@@ -18,7 +18,7 @@ export async function getStaticProps() {
       case 'text':
         body.push({
           slice_type,
-          html: RichText.asHtml(primary.text, linkResolver, htmlSerializer),
+          html: RichText.asHtml(primary.text || [], linkResolver, htmlSerializer),
         })
         break
       case 'image':

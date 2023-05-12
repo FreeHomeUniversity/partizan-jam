@@ -16,13 +16,13 @@ export async function getStaticProps({ preview = false, previewData, params }) {
 
   const songs = []
 
-  const title = RichText.asText(musician.title)
-  const description = RichText.asHtml(musician.description, linkResolver, htmlSerializer)
-  const descriptionAsText = RichText.asText(musician.description)
+  const title = RichText.asText(musician.title || [])
+  const description = RichText.asHtml(musician.description || [], linkResolver, htmlSerializer)
+  const descriptionAsText = RichText.asText(musician.description || [])
 
   const image = {
     url: musician.image?.url || null,
-    alt: musician.image?.alt || RichText.asText(musician.title),
+    alt: musician.image?.alt || RichText.asText(musician.title || []),
   }
 
   prismicSongs.forEach(({ node }) => {
@@ -30,11 +30,11 @@ export async function getStaticProps({ preview = false, previewData, params }) {
       songs.push({
         id: node._meta.id,
         uid: node._meta.uid,
-        title: node.title ? RichText.asText(node.title) : null,
-        description: node.description ? RichText.asHtml(node.description, linkResolver, htmlSerializer) : null,
+        title: node.title ? RichText.asText(node.title || []) : null,
+        description: node.description ? RichText.asHtml(node.description || [], linkResolver, htmlSerializer) : null,
         thumbnail: {
           url: node.video.thumbnail_url,
-          alt: node.video.title || node.title ? RichText.asText(node.title) : null,
+          alt: node.video.title || node.title ? RichText.asText(node.title || []) : null,
         },
       })
     }

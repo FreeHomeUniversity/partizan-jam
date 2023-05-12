@@ -30,21 +30,21 @@ export async function getStaticProps({ preview = false, previewData, params }) {
         description: node.description ? RichText.asHtml(node.description, linkResolver, htmlSerializer) : null,
         thumbnail: {
           url: node.video.thumbnail_url,
-          alt: node.video.title || node.title ? RichText.asText(node.title) : null,
+          alt: node.video.title || node.title ? RichText.asText(node.title || []) : null,
         },
       })
     }
   })
 
-  const title = RichText.asText(song.title)
-  const description = RichText.asHtml(song.description, linkResolver, htmlSerializer)
-  const descriptionAsText = RichText.asText(song.description)
+  const title = RichText.asText(song.title || [])
+  const description = RichText.asHtml(song.description || [], linkResolver, htmlSerializer)
+  const descriptionAsText = RichText.asText(song.description || [])
 
   const stories = []
 
   song.story.stories.forEach((story) => {
     stories.push({
-      text: RichText.asHtml(story.text, linkResolver, htmlSerializer),
+      text: RichText.asHtml(story.text || [], linkResolver, htmlSerializer),
       language: story.language,
     })
   })
@@ -53,11 +53,11 @@ export async function getStaticProps({ preview = false, previewData, params }) {
     musicians.push({
       id: musician._meta.id,
       uid: musician._meta.uid,
-      title: RichText.asText(musician.title),
-      description: RichText.asHtml(musician.description, linkResolver, htmlSerializer),
+      title: RichText.asText(musician.title || []),
+      description: RichText.asHtml(musician.description || [], linkResolver, htmlSerializer),
       thumbnail: {
         url: musician.image?.url || null,
-        alt: musician.image?.alt || RichText.asText(musician.title),
+        alt: musician.image?.alt || RichText.asText(musician.title || []),
       },
     })
   })
@@ -66,21 +66,21 @@ export async function getStaticProps({ preview = false, previewData, params }) {
     artists.push({
       id: song.artist._meta.id,
       uid: song.artist._meta.uid,
-      title: RichText.asText(song.artist.title),
+      title: RichText.asText(song.artist.title || []),
       description: truncate(RichText.asText(song.artist.description || []), {
         length: 240,
         separator: /,? +/,
       }),
       thumbnail: {
         url: song.artist.image?.url || null,
-        alt: song.artist.image?.alt || RichText.asText(song.artist.title),
+        alt: song.artist.image?.alt || RichText.asText(song.artist.title || []),
       },
       artworks: song.artist.body.map(({ primary, fields }) => ({
-        title: RichText.asText(primary.artwork_title),
-        description: RichText.asHtml(primary.artwork_description, linkResolver, htmlSerializer),
+        title: RichText.asText(primary.artwork_title || []),
+        description: RichText.asHtml(primary.artwork_description || [], linkResolver, htmlSerializer),
         thumbnail: {
           url: primary.artwork_image?.url || null,
-          alt: primary.artwork_image?.alt || RichText.asText(primary.artwork_title),
+          alt: primary.artwork_image?.alt || RichText.asText(primary.artwork_title || []),
         },
         slides: fields.map((slide) => ({
           url: slide.artwork_slider_image?.url || null,

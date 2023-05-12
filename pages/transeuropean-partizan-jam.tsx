@@ -12,7 +12,7 @@ import { YouTube } from '../components/YouTube'
 export async function getStaticProps() {
   const aboutTEPJ = await getAboutTEPJ()
 
-  const title = RichText.asText(aboutTEPJ.data.title)
+  const title = RichText.asText(aboutTEPJ.data.title || [])
   const body = []
 
   aboutTEPJ.data.body.forEach(({ slice_type, items, primary }) => {
@@ -20,13 +20,13 @@ export async function getStaticProps() {
       case 'text':
         body.push({
           slice_type,
-          html: RichText.asHtml(primary.text, linkResolver, htmlSerializer),
+          html: RichText.asHtml(primary.text || [], linkResolver, htmlSerializer),
         })
         break
       case 'Lead':
         body.push({
           slice_type,
-          html: RichText.asHtml(primary.text, linkResolver, htmlSerializer),
+          html: RichText.asHtml(primary.text || [], linkResolver, htmlSerializer),
         })
         break
       case 'video':

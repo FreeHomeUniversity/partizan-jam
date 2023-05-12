@@ -19,14 +19,14 @@ export async function getStaticProps({ preview = false, previewData }) {
     musicians.push({
       id: node._meta.id,
       uid: node._meta.uid,
-      title: RichText.asText(node.title),
-      description: truncate(RichText.asText(node.description), {
+      title: RichText.asText(node.title || []),
+      description: truncate(RichText.asText(node.description || []), {
         length: 240,
         separator: /,? +/,
       }),
       thumbnail: {
         url: node.image?.url || null,
-        alt: node.image?.alt || RichText.asText(node.title),
+        alt: node.image?.alt || RichText.asText(node.title || []),
       },
     })
   })

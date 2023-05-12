@@ -11,7 +11,7 @@ import { Image } from '../components/Image'
 export async function getStaticProps() {
   const aboutKots = await getAboutKots()
 
-  const title = RichText.asText(aboutKots.data.title)
+  const title = RichText.asText(aboutKots.data.title || [])
   const body = []
 
   aboutKots.data.body.forEach(({ slice_type, items, primary }) => {
@@ -19,7 +19,7 @@ export async function getStaticProps() {
       case 'text':
         body.push({
           slice_type,
-          html: RichText.asHtml(primary.text, linkResolver, htmlSerializer),
+          html: RichText.asHtml(primary.text || [], linkResolver, htmlSerializer),
         })
         break
       case 'image':

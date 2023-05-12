@@ -48,7 +48,7 @@ export async function getStaticProps({ preview = false, previewData }) {
     }),
   }
 
-  const title = RichText.asText(homepage.title)
+  const title = RichText.asText(homepage.title || [])
 
   const songs = []
 
@@ -56,14 +56,14 @@ export async function getStaticProps({ preview = false, previewData }) {
     songs.push({
       id: node._meta.id,
       uid: node._meta.uid,
-      title: RichText.asText(node.title),
-      description: truncate(RichText.asHtml(node.description, linkResolver, htmlSerializer), {
+      title: RichText.asText(node.title || []),
+      description: truncate(RichText.asHtml(node.description || [], linkResolver, htmlSerializer), {
         length: 240,
         separator: /,? +/,
       }),
       thumbnail: {
         url: node.video.thumbnail_url,
-        alt: node.video.title || RichText.asText(node.title),
+        alt: node.video.title || RichText.asText(node.title || []),
       },
     })
   })
@@ -74,10 +74,10 @@ export async function getStaticProps({ preview = false, previewData }) {
     musicians.push({
       id: node._meta.id,
       uid: node._meta.uid,
-      title: RichText.asText(node.title),
+      title: RichText.asText(node.title || []),
       thumbnail: {
         url: node.image.url,
-        alt: node.image.alt || RichText.asText(node.title),
+        alt: node.image.alt || RichText.asText(node.title || []),
       },
     })
   })
@@ -88,10 +88,10 @@ export async function getStaticProps({ preview = false, previewData }) {
     artists.push({
       id: node._meta.id,
       uid: node._meta.uid,
-      title: RichText.asText(node.title),
+      title: RichText.asText(node.title || []),
       thumbnail: {
         url: node.image.url,
-        alt: node.image.alt || RichText.asText(node.title),
+        alt: node.image.alt || RichText.asText(node.title || []),
       },
     })
   })

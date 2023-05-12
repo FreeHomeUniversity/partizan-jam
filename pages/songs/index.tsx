@@ -19,11 +19,11 @@ export async function getStaticProps({ preview = false, previewData }) {
     songs.push({
       id: node._meta.id,
       uid: node._meta.uid,
-      title: RichText.asText(node.title),
-      description: RichText.asHtml(node.description, linkResolver, htmlSerializer),
+      title: RichText.asText(node.title || []),
+      description: RichText.asHtml(node.description || [], linkResolver, htmlSerializer),
       thumbnail: {
         url: node.video.thumbnail_url,
-        alt: node.video.title || RichText.asText(node.title),
+        alt: node.video.title || RichText.asText(node.title || []),
       },
     })
   })
